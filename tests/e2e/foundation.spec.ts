@@ -108,6 +108,11 @@ test("email code UI, secure cookies, complex/role management and sign-out", asyn
   ).toBe(403);
   // Native bearer path uses network-verified identity and the same database authorization.
   const stored = auth
+    .filter(
+      (c) =>
+        c.name === "__Host-booking-auth" ||
+        /^__Host-booking-auth\.\d+$/.test(c.name),
+    )
     .sort((a, b) => a.name.localeCompare(b.name))
     .map((c) => c.value)
     .join("");

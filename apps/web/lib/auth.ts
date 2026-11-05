@@ -48,7 +48,11 @@ export function authContext(request: NextRequest) {
     },
     clear() {
       for (const { name } of request.cookies.getAll())
-        if (name === cookieName || name.startsWith(cookieName + "."))
+        if (
+          name === cookieName ||
+          name.startsWith(cookieName + ".") ||
+          name.startsWith(cookieName + "-")
+        )
           pending.push({
             name,
             value: "",
