@@ -14,5 +14,10 @@ attention to server-side authorization across roles and complexes, guest-data
 exposure, and whether the PR accurately labels what is implemented, mocked,
 untested or unfinished.
 
-Setup and test commands: none exist yet. They will be listed in
-`docs/engineering.md` once verified.
+Codex is the primary builder. Claude independently reviews implementation PRs.
+Do not merge your own pull requests, deploy production, or create paid resources
+without separate authorization. Preserve the planning and design work in PR #2.
+
+Verified setup and checks: [docs/development.md](docs/development.md).
+The product owner's 2026-11-05 approval covers M1.1 and its stack; later slices
+remain deferred. Make routine engineering decisions without re-asking approval.

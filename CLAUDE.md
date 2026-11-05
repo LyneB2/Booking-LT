@@ -13,3 +13,9 @@ Key reminders:
 - Report honestly what is implemented, mocked, untested or unfinished.
 - Record approved decisions in `docs/`, not only in conversation.
 - Work on a focused branch and open a pull request; do not merge it yourself.
+
+Claude independently reviews Codex's implementation PRs. Check security boundaries,
+database invariants, test evidence and remaining setup; do not assume chat context.
+Codex is the primary builder. M1.1 and its TypeScript/Next.js/Supabase/Drizzle/Zod/
+Vitest/Playwright stack are approved as of 2026-11-05. That approval does not
+include paid resources, production deployment, merging, or later modules.
