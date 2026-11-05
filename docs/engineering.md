@@ -96,8 +96,13 @@ Detailed entity design is a Phase 0 deliverable. Fixed principles:
 3. **Complex staff see complex operations, not owner listings.** Complex admin and
    front desk read reservation/registration data for properties in their complex
    only, limited to the fields their role needs.
-4. **Listing lifecycle** is explicit: `draft → invited → claimed → verified →
-   published → unpublished`. Bookability is checked on the server from this state.
+4. **Ownership verification and publication are separate.** Self-service hosts
+   create drafts without invitation/claim steps. Administrator-prepared drafts
+   require an accepted invitation and approved claim. Both paths require verified
+   property authority and publication before public access or booking is allowed.
+   Publication supports unpublishing and republishing, with server-side checks of
+   current authority. Claim invitations are recipient- and draft-bound, expiring,
+   single-use and revocable; accepting a link alone does not verify ownership.
 5. **Shared inventory:** a property has one or more rentable configurations; each
    configuration maps to the physical spaces it occupies. A reservation reserves
    spaces, and the database prevents two active reservations from occupying the
@@ -134,18 +139,41 @@ To be designed in detail when these features are implemented:
 2. **Booking concurrency:** availability checks and reservation creation happen in
    one transaction backed by a database constraint, so two guests cannot book
    overlapping stays (including across shared-space configurations).
-3. **Payment processing vs commission accounting:** the payment provider sits
-   behind a small adapter interface. Commission splits are recorded in an
-   internal, append-only **ledger** that is the source of truth, regardless of
-   whether the provider performs the split.
-4. **Retries and idempotency:** every payment operation and webhook handler is
-   idempotent (idempotency keys, deduplicated webhook events).
-5. **Refunds and cancellations** produce ledger entries reversing the relevant
-   commission amounts.
-6. **Reconciliation:** regular comparison of provider records against the ledger,
-   with a platform-admin view of mismatches.
-7. The **Pagadito integration is unverified**. Do not describe it as working until
-   it has been tested end to end in this codebase, including the commission issue.
+3. **Agreed financial snapshot:** calculate prices and commissions on the server
+   and preserve the agreed, versioned breakdown for each reservation/payment:
+   currency, stay charges, fees, taxes, recipients, commission bases and amounts,
+   and applicable cancellation/refund terms. Later rate or agreement changes must
+   not silently rewrite an existing agreement.
+4. **Provider-managed allocation and accounting:** put provider integration behind
+   a small adapter and follow the funds-flow requirement in `product.md` §4.7.
+   The internal, append-only ledger records agreed entitlements separately from
+   provider-confirmed movements; an accounting entry alone is not evidence of a
+   transfer or settlement. An unsupported split blocks live payments under the
+   current model; it does not authorize central collection and manual payouts.
+5. **Authoritative payment confirmation:** before recording a payment as successful,
+   verify its status server-side through an authenticated provider API response
+   or a webhook authenticated by the provider's documented verification method.
+   Match the payment/reservation reference, amount, currency and intended
+   recipient accounts. Browser redirects, client reports and submitted payment
+   requests are not proof of payment. Authorization alone is not capture.
+6. **Separate states:** explicitly model booking, payment authorization/capture,
+   refund, allocation and settlement states and permitted transitions. A paid
+   reservation does not prove that each recipient has been allocated or settled
+   its share; a cancellation does not prove a refund succeeded.
+7. **Retries and idempotency:** every payment operation and webhook handler is
+   idempotent (idempotency keys, deduplicated webhook events). Handle delayed and
+   out-of-order notifications through validated state transitions; stale events
+   must not overwrite newer confirmed results.
+8. **Refunds and cancellations:** compute full or partial refunds and any
+   commission adjustments from the saved agreement and applicable policy.
+   Record requested/pending refunds separately from provider-confirmed outcomes.
+   Post confirmed fund movements only when verified; a failed or pending refund
+   must not be recorded as paid back. Cancellation does not automatically reverse
+   every commission, and retrying a refund must not duplicate ledger adjustments.
+9. **Reconciliation:** regularly compare expected allocations and confirmed ledger
+   movements with provider records, with a platform-admin view of mismatches.
+10. The **Pagadito integration is unverified**. Do not describe it as working until
+    it has been tested end to end in this codebase, including the commission issue.
 
 ## 6. Environments and data
 
@@ -165,12 +193,20 @@ Each milestone must include meaningful automated checks before it is called done
    - access allowed for the right role and scope,
    - access **denied** for other complexes, other properties and lesser roles,
    - access denied **after a permission is revoked**,
-   - unclaimed drafts never returned by public/booking endpoints.
+   - private/unverified self-service drafts and unclaimed administrator-prepared
+     drafts never returned by public/booking endpoints,
+   - guest-registration access limited to the guest's own reservation, the
+     host/cohost's assigned properties, or necessary records for the staff's complex.
 4. **End-to-end tests** for critical workflows (e.g. complex page edit, guest
    registration, booking) on web.
 5. **Rendered UI inspection** at mobile and desktop widths (screenshots in PRs for
    UI changes), plus basic accessibility checks.
 6. Type checking and linting in CI.
+
+When the relevant features are implemented, cover both listing-onboarding paths,
+expired/revoked/already-used invitations, review status after guest-roster edits,
+unverified payment redirects, mismatched payment references/amounts/recipients,
+duplicate or out-of-order callbacks, and full/partial/pending/failed refunds.
 
 Commands for these checks will be documented here once they exist and have been
 verified to run.
