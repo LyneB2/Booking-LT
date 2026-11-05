@@ -281,8 +281,10 @@ four screens; a toggle shows the desktop and phone layouts. Screenshots:
 | 3. Preview and publish confirmation | `preview-desktop.png` | `preview-mobile.png` |
 | 4. Arrivals — **design preview, not M1** | `arrivals-desktop.png` | `arrivals-mobile.png` |
 
-All content is fictional ("Playa Serena Residences", `.example` contacts, drawn
-placeholder photos). Design choices:
+Names and contacts are fictional ("Playa Serena Residences", `.example` contacts).
+The cover photo (`design/previews/assets/complex-cover.webp`) was supplied by the
+product owner for this review; the other photos are drawn placeholders. Confirm
+the right to use that photo before it appears anywhere public. Design choices:
 - **Public page:** large title and photo mosaic, generous white space, one calm
   accent colour taken from the complex's brand preset. The side card holds contact
   details; "Stays" is a clearly marked placeholder until listings exist. It states

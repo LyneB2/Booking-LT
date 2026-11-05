@@ -3,7 +3,7 @@
 <meta name="robots" content="noindex">
 <!--
   Booking LT — Milestone 1 design previews (static, non-functional).
-  All names, contacts and photos are fictional placeholders.
+  Names and contacts are fictional placeholders; the cover photo was supplied for review and the other photos are drawn placeholders.
   Plan: docs/milestones/m1-complex-page.md
 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -122,6 +122,7 @@ body[data-device="mobile"] .browserbar { display: none; }
 .ph2 { background: linear-gradient(160deg, #F2C98B 0%, #E39A6A 45%, #6C8FA6 100%); }
 .ph3 { background: radial-gradient(circle at 70% 35%, #7FD3CF 0 22%, transparent 23%), linear-gradient(180deg, #CFE7D5, #6FA88B); }
 .ph4 { background: linear-gradient(135deg, #E9E2D3 0 50%, #CDBFA4 50% 100%); }
+.ph-real { background: #8FB9B5 url("assets/complex-cover.webp") center / cover no-repeat; }
 .ph5 { background: linear-gradient(180deg, #2D4F73 0%, #E58F65 60%, #F3C77A 100%); }
 
 /* ---------- Public complex page ---------- */
@@ -314,7 +315,7 @@ textarea.input { min-height: 112px; resize: vertical; line-height: 1.55; }
   <header class="board-head">
     <p class="eyebrow">Booking LT · Milestone 1 · Design preview for review</p>
     <h1>Complex public page and editor</h1>
-    <p class="lede">Static mock-ups, not working software. All names, contacts and photos are fictional placeholders. Items tagged <span class="tag">Design preview</span> or <span class="tag">Later</span> are outside Milestone 1.</p>
+    <p class="lede">Static mock-ups, not working software. Names and contacts are fictional placeholders; the cover photo was supplied for review and the other photos are drawn placeholders. Items tagged <span class="tag">Design preview</span> or <span class="tag">Later</span> are outside Milestone 1.</p>
     <div class="controls">
       <nav class="seg" aria-label="Screens">
         <a href="#public" data-tab="public">1 · Public page</a>
@@ -345,7 +346,7 @@ textarea.input { min-height: 112px; resize: vertical; line-height: 1.55; }
           <p class="tagline">Beachfront condominiums around a quiet garden pool, a short walk from town.</p>
         </div>
         <div class="gallery" aria-label="Photos">
-          <div class="ph ph1" role="img" aria-label="Beach in front of the complex at midday"><span>Sample photo</span><span class="more" hidden></span></div>
+          <div class="ph ph-real" role="img" aria-label="Aerial view of the beach, the garden pool and the condo buildings"></div>
           <div class="ph ph2" role="img" aria-label="Terrace at sunset"><span>Sample photo</span></div>
           <div class="ph ph3" role="img" aria-label="Garden pool"><span>Sample photo</span></div>
           <div class="ph ph4" role="img" aria-label="Lobby"><span>Sample photo</span></div>
@@ -463,7 +464,7 @@ The beach is calm in the morning and busier after lunch.</textarea><span class="
               <section class="card">
                 <div class="card-head"><h3>Photos</h3><p>Up to 12 · JPEG, PNG or WebP · 10 MB each</p></div>
                 <div class="photos">
-                  <div class="ph ph1 cover" role="img" aria-label="Cover photo"><span>Cover</span></div>
+                  <div class="ph ph-real cover" role="img" aria-label="Cover photo: aerial view of the beach and the complex"><span>Cover</span></div>
                   <div class="ph ph2" role="img" aria-label="Photo 2"><span>2</span></div>
                   <div class="ph ph3" role="img" aria-label="Photo 3"><span>3</span></div>
                   <div class="add">+ Add photos</div>
@@ -547,7 +548,7 @@ The beach is calm in the morning and busier after lunch.</textarea><span class="
           <p class="tagline">Beachfront condominiums around a quiet garden pool, a short walk from town.</p>
         </div>
         <div class="gallery" aria-label="Photos">
-          <div class="ph ph1" role="img" aria-label="Beach"><span>Sample photo</span></div>
+          <div class="ph ph-real" role="img" aria-label="Aerial view of the beach, the garden pool and the condo buildings"></div>
           <div class="ph ph2" role="img" aria-label="Terrace"><span>Sample photo</span></div>
           <div class="ph ph3" role="img" aria-label="Pool"><span>Sample photo</span></div>
           <div class="ph ph4" role="img" aria-label="Lobby"><span>Sample photo</span></div>
