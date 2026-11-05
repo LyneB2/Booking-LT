@@ -12,7 +12,8 @@ Select the Booking-LT cloud environment, open the repository there and use its
 terminal. This task uses `/workspace/Booking-LT`. A new cloud environment needs
 GitHub repository access and Node 24. Cloud networking must permit GitHub and npm;
 use its configured proxy and CA trust. The current cloud already has Chromium at
-`/usr/bin/chromium`. Standard GitHub-hosted CI installs Chromium itself.
+`/usr/bin/chromium`. GitHub-hosted CI uses its preinstalled Chrome and installs Chromium only as a
+fallback.
 
 ```sh
 cd /workspace/Booking-LT
@@ -58,8 +59,8 @@ Run from the repository root **in the cloud**, not on the Mac:
 
 On a fresh cloud/CI machine without system Chromium, run
 `npx playwright install --with-deps chromium` in that machine and omit
-`PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH`. This alternative is configured in CI; the
-current cloud run uses preinstalled Chromium. PR checks require no repository
+`PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH`. CI first uses the runner’s preinstalled Chrome, with this install command as a
+fallback; the current cloud run uses preinstalled Chromium. PR checks require no repository
 secrets. Actions upload browser screenshots/traces for review. Make the
 `Foundation checks / foundation` job a required branch-protection check in GitHub
 repository settings; code alone cannot enforce branch protection.
