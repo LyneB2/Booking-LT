@@ -4,7 +4,7 @@ Status: **Draft for review.** This document records the product requirements and
 decisions approved so far. Anything listed under [Open decisions](#8-open-decisions)
 is not decided and must not be assumed by design or code.
 
-Last updated: 2026-11-05
+Last updated: 2026-11-06
 
 ---
 
@@ -201,7 +201,7 @@ frontend, backend and database. Order may change after review.
 
 | Area | Status |
 | --- | --- |
-| Product and engineering documentation | Shared requirements; updated for Codex building / Claude reviewing |
+| Product and engineering documentation | Shared requirements; updated for Claude building / Codex reviewing |
 | Milestone 1 plan and design previews ([docs/milestones/m1-complex-page.md](milestones/m1-complex-page.md)) | M1.1 approved; later slices deferred. Previews are static mock-ups with fictional content |
 | Application foundation | M1.1 implementation; see [development.md](development.md) for verification and service setup |
 | Pagadito integration | **External testing underway; not verified; not in this repository** |
@@ -225,8 +225,12 @@ unfinished. Never call the product bug-free or production-ready without evidence
 
 8. M1.1 application foundation and TypeScript, Next.js, Supabase, Drizzle, Zod,
    Vitest and Playwright approved on 2026-11-05. Vercel is the planned web host;
-   Resend will deliver Supabase email codes when configured. Codex builds and
-   Claude independently reviews PRs. No approval for later slices or spending.
+   Resend will deliver Supabase email codes when configured. No approval for later
+   slices or spending.
+9. As of 2026-11-06, Claude is the primary builder and Codex independently reviews.
+   Preserve the original Claude mockups as the preferred visual direction. Existing
+   M1.1 implementation remains available for assessment and reuse; changing builders
+   does not authorize a rewrite, merge, paid resources or production deployment.
 
 ## 8. Open decisions
 

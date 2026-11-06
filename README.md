@@ -2,7 +2,8 @@
 
 A vacation rental marketplace and operations platform for condominium complexes.
 One backend and identity model will serve the responsive web and future shared
-iOS/Android app. Codex builds; Claude independently reviews pull requests.
+iOS/Android app. Claude builds; Codex independently reviews pull requests.
+See the [handoff back to Claude](docs/handoff-to-claude.md) before continuing.
 
 M1.1 adds the application foundation: email-code sign-in, scoped authorization,
 complex creation and team access, versioned SQL migrations and pull-request checks.

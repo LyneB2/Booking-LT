@@ -6,6 +6,6 @@ Include actual checks and distinguish real PostgreSQL/browser behavior from simu
 
 ## Remaining setup / untested / deferred
 
-## Claude review focus
+## Independent review focus (Codex)
 
 Check server-side roles and disabled accounts, cross-complex requests, session boundaries, migrations and evidence. Owner merges; agents do not merge or deploy production.

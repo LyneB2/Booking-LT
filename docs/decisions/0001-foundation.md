@@ -2,7 +2,9 @@
 
 Product-owner approval: M1.1 only, TypeScript, Next.js, Supabase, Drizzle, Zod,
 Vitest and Playwright. Vercel is planned and Resend will supply Supabase SMTP.
-Codex builds; Claude independently reviews PRs. No paid provisioning, production
+The initial workflow was Codex building and Claude reviewing. The owner reversed
+those roles on 2026-11-06: Claude builds and Codex independently reviews. Preserve
+the implementation for assessment and reuse. No paid provisioning, production
 deployment, merge or later module is authorized.
 
 - Preserve PR #2 at `0484c8a`; stack this implementation on its planning branch.

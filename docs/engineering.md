@@ -3,7 +3,7 @@
 Status: **Draft for review.** Shared by every contributor and coding agent
 (Claude, Codex, others). The product requirements live in [product.md](product.md).
 
-Last updated: 2026-11-05
+Last updated: 2026-11-06
 
 ---
 
@@ -220,7 +220,7 @@ verified to run.
 1. One focused **feature branch per change**; small pull requests.
 2. Every PR states: what changed, how it was tested (with real output), and what is
    **implemented / mocked / untested / unfinished**.
-3. Codex is the primary builder; Claude independently reviews implementation PRs.
+3. Claude is the primary builder; Codex independently reviews implementation PRs.
    Agents do not merge their own PRs. The owner controls merge and release.
 4. UI PRs include desktop and mobile screenshots.
 5. Approved requirement or design changes update `docs/` in the same PR.

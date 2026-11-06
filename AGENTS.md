@@ -14,7 +14,10 @@ attention to server-side authorization across roles and complexes, guest-data
 exposure, and whether the PR accurately labels what is implemented, mocked,
 untested or unfinished.
 
-Codex is the primary builder. Claude independently reviews implementation PRs.
+Claude is the primary builder. Codex independently reviews implementation PRs.
+The owner changed this workflow on 2026-11-06. Preserve the existing M1.1 code
+and tests for Claude's assessment; switching builders does not authorize a rewrite.
+See [docs/handoff-to-claude.md](docs/handoff-to-claude.md).
 Do not merge your own pull requests, deploy production, or create paid resources
 without separate authorization. Preserve the planning and design work in PR #2.
 

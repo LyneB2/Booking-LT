@@ -1,11 +1,11 @@
 # Milestone 1 — Complex public page: plan and design
 
 Status: **M1.1 approved on 2026-11-05; M1.2–M1.4 deferred.** Planning and static
-designs originate in open PR #2 and are preserved. Codex builds; Claude independently
+designs originate in open PR #2 and are preserved. Claude builds; Codex independently
 reviews. Foundation verification and missing setup: [../development.md](../development.md).
 No paid resources, production deployment or merges are authorized.
 
-Last updated: 2026-11-05
+Last updated: 2026-11-06
 
 Design previews: [`design/previews/m1-complex-page.html`](../../design/previews/m1-complex-page.html)
 (open in a browser) and screenshots in [`design/previews/screenshots/`](../../design/previews/screenshots/).
@@ -422,7 +422,7 @@ Hosted Auth configuration is listed precisely in `development.md`.
 
 ## 14. Implementation slices after approval
 
-Each slice is its own branch and pull request, independently reviewed by Claude
+Each slice is its own branch and pull request, independently reviewed by Codex
 before the next starts. Only M1.1 is authorized now.
 
 | Slice | Contents | Done when |
