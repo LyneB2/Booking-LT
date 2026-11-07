@@ -180,6 +180,8 @@ even if the first listings are simple.
   feel approachable, not like enterprise software.
 - **Representative desktop and mobile designs are presented for review before the
   full interfaces are implemented.**
+- Reusable visual rules (typography, widths, spacing, radii, gallery behaviour)
+  live in [design.md](design.md).
 
 ## 6. Phased scope
 
@@ -189,7 +191,7 @@ frontend, backend and database. Order may change after review.
 | Phase | Focus | Notes |
 | --- | --- | --- |
 | 0 | Documentation, domain & permission model, stack decision, representative designs | Current phase. No application code. |
-| 1 | **Complex module** | Accounts, platform admin adds a complex, complex roles (admin, front desk), editable branded complex page, rules, amenities, announcements. Scope and acceptance criteria to be proposed and approved before implementation. |
+| 1 | **Complex module** | Accounts, platform admin adds a complex, complex roles (admin, front desk), editable branded complex page, rules, amenities, announcements. Milestone 1 (edit, preview and publish the complex page) is proposed in [milestones/m1-complex-page.md](milestones/m1-complex-page.md). |
 | 2 | Hosts, properties and listings | Host profiles, properties linked to complexes, listing editing, admin-prepared drafts with invitation + claim verification, cohost grants. |
 | 3 | Guest registration and arrivals | External reservation entry, structured guest registration with completeness and change history, arrivals/departures for complex staff. Replaces the Beach Residences email workflow. |
 | 4 | Direct booking (without live payments) | Search, availability with shared-inventory rules, reservations, guest profiles, host–guest messaging. Payments mocked and clearly labelled. |
@@ -202,7 +204,9 @@ frontend, backend and database. Order may change after review.
 | Area | Status |
 | --- | --- |
 | Product and engineering documentation | Draft (this PR) |
-| Application code, database, designs | **Not started** |
+| Milestone 1 plan and design previews ([docs/milestones/m1-complex-page.md](milestones/m1-complex-page.md)) | **Proposed; awaiting approval.** Previews are static mock-ups with fictional content |
+| Demo dataset (`demo/`, see [development.md](development.md)) | **Exists:** fictional complexes, people, roles, page content and labelled placeholder photos; validated by script. Not loaded anywhere yet (no database) |
+| Application code, database | **Not started** |
 | Pagadito integration | **External testing underway; not verified; not in this repository** |
 
 This table must be kept honest: mark items as implemented, mocked, untested or

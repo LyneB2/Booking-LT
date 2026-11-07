@@ -1,0 +1,851 @@
+<title>Complex Page Previews</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="robots" content="noindex">
+<!--
+  Booking LT — Milestone 1 design previews (static, non-functional).
+  Names and contacts are fictional placeholders; the cover photo was supplied for review and the other photos are drawn placeholders.
+  Plan: docs/milestones/m1-complex-page.md
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,650&family=Instrument+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: a review board — tabs pick a screen, a toggle frames it as desktop browser or phone;
+   screens use container queries so the same markup renders each layout. */
+:root {
+  --bg: #F3F6F6;          /* board */
+  --surface: #FFFFFF;
+  --surface-2: #EEF3F3;
+  --fg: #12201F;
+  --muted: #586A69;
+  --text-2: #475655;      /* secondary text, ~7:1 on white */
+  --line: #D9E2E1;
+  --accent: #0D6A73;      /* complex brand preset "Lagoon" */
+  --accent-fg: #FFFFFF;
+  --accent-soft: #DDEFEF;
+  --ok: #1D7349; --ok-soft: #DDF1E6;
+  --warn: #8F5200; --warn-soft: #FBEBD3;
+  --bad: #AE2216; --bad-soft: #FBE1DE;
+  --tag: #5A3FA8; --tag-soft: #ECE6FA;   /* "design preview / later" markers */
+  --scrim: rgba(10, 20, 20, .42);
+  --shadow: 0 1px 2px rgba(12, 30, 30, .06), 0 8px 28px rgba(12, 30, 30, .08);
+  --font-display: "Bricolage Grotesque", "Avenir Next", system-ui, sans-serif;
+  --font-body: "Instrument Sans", -apple-system, "Segoe UI", system-ui, sans-serif;
+  --r-sm: 8px; --r-md: 14px; --r-lg: 22px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0D1414; --surface: #151E1E; --surface-2: #1C2727; --fg: #E6EEED; --muted: #98AAA8; --text-2: #B3C1BF;
+    --line: #2A3837; --accent: #56B7BF; --accent-fg: #052326; --accent-soft: #123236;
+    --ok: #5FCB93; --ok-soft: #12301F; --warn: #E9AE57; --warn-soft: #36270F;
+    --bad: #F38C82; --bad-soft: #3B1916; --tag: #BBA6F4; --tag-soft: #2A2342;
+    --scrim: rgba(0, 0, 0, .6); --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 28px rgba(0,0,0,.35);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0D1414; --surface: #151E1E; --surface-2: #1C2727; --fg: #E6EEED; --muted: #98AAA8; --text-2: #B3C1BF;
+  --line: #2A3837; --accent: #56B7BF; --accent-fg: #052326; --accent-soft: #123236;
+  --ok: #5FCB93; --ok-soft: #12301F; --warn: #E9AE57; --warn-soft: #36270F;
+  --bad: #F38C82; --bad-soft: #3B1916; --tag: #BBA6F4; --tag-soft: #2A2342;
+  --scrim: rgba(0, 0, 0, .6); --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 28px rgba(0,0,0,.35);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--fg);
+  font: 15px/1.5 var(--font-body);
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 24px 48px;
+}
+h1, h2, h3 { font-family: var(--font-display); font-weight: 650; text-wrap: balance; margin: 0; letter-spacing: -0.01em; }
+p { margin: 0; }
+button { font: inherit; color: inherit; cursor: pointer; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+/* ---------- Review board chrome ---------- */
+.board { max-width: 1480px; margin: 0 auto; display: grid; gap: 20px; }
+.board-head { display: grid; gap: 14px; }
+.board-head h1 { font-size: clamp(24px, 3vw, 32px); }
+.board-head .lede { color: var(--muted); max-width: 68ch; }
+.controls { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; }
+.seg { display: inline-flex; flex-wrap: wrap; gap: 4px; padding: 4px; background: var(--surface-2); border-radius: 999px; }
+.seg a, .seg button {
+  border: 0; background: transparent; padding: 7px 14px; border-radius: 999px;
+  color: var(--muted); text-decoration: none; font-weight: 500; font-size: 14px;
+}
+.seg [aria-current="page"], .seg [aria-pressed="true"] { background: var(--surface); color: var(--fg); box-shadow: var(--shadow); }
+.notice { font-size: 13px; color: var(--muted); }
+.screen-note { font-size: 14px; color: var(--muted); max-width: 80ch; }
+.screen-note strong { color: var(--fg); font-weight: 600; }
+
+.stage { display: flex; justify-content: center; }
+.frame {
+  container-type: inline-size; width: 100%; max-width: 1440px;
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-md);
+  overflow: hidden; box-shadow: var(--shadow); position: relative;
+}
+body[data-device="mobile"] .frame {
+  max-width: 390px; height: 844px; overflow-y: auto; border-radius: 40px;
+  border: 10px solid var(--fg); scrollbar-width: none;
+}
+body[data-device="mobile"] .browserbar { display: none; }
+.browserbar {
+  display: flex; align-items: center; gap: 10px; padding: 10px 14px;
+  background: var(--surface-2); border-bottom: 1px solid var(--line);
+}
+.dots { display: flex; gap: 6px; } .dots i { width: 10px; height: 10px; border-radius: 50%; background: var(--line); }
+.url { flex: 1; min-width: 0; text-align: center; font-size: 12.5px; color: var(--muted); background: var(--surface); border-radius: 8px; padding: 4px 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.screen[hidden] { display: none; }
+
+/* ---------- Shared UI atoms ---------- */
+.btn { border: 1px solid var(--line); background: var(--surface); padding: 9px 16px; border-radius: 999px; font-weight: 600; font-size: 14px; white-space: nowrap; }
+.btn.primary { background: var(--accent); color: var(--accent-fg); border-color: var(--accent); }
+.btn.ghost { border-color: transparent; background: transparent; }
+.btn[disabled] { opacity: .55; cursor: not-allowed; }
+.pill { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 600; padding: 3px 10px; border-radius: 999px; white-space: nowrap; }
+.pill::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.pill.ok { color: var(--ok); background: var(--ok-soft); }
+.pill.warn { color: var(--warn); background: var(--warn-soft); }
+.pill.bad { color: var(--bad); background: var(--bad-soft); }
+.pill.neutral { color: var(--muted); background: var(--surface-2); }
+.tag { font-size: 11px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--tag); background: var(--tag-soft); padding: 2px 7px; border-radius: 6px; white-space: nowrap; }
+.eyebrow { font-size: 12.5px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+
+/* Placeholder photos — stand-ins for uploaded images, deliberately theme-independent */
+.ph { position: relative; border-radius: var(--r-sm); overflow: hidden; background: #8FB9B5; min-height: 80px; }
+.ph span { position: absolute; left: 8px; bottom: 8px; font-size: 11px; font-weight: 600; color: #fff; background: rgba(0,0,0,.38); padding: 2px 7px; border-radius: 6px; }
+.ph1 { background: linear-gradient(180deg, #7FC2D4 0%, #BFE3E6 46%, #2F8E98 47%, #1E6F7A 70%, #E8D6AE 71%, #DCC596 100%); }
+.ph2 { background: linear-gradient(160deg, #F2C98B 0%, #E39A6A 45%, #6C8FA6 100%); }
+.ph3 { background: radial-gradient(circle at 70% 35%, #7FD3CF 0 22%, transparent 23%), linear-gradient(180deg, #CFE7D5, #6FA88B); }
+.ph4 { background: linear-gradient(135deg, #E9E2D3 0 50%, #CDBFA4 50% 100%); }
+.ph-real { background: #8FB9B5 url("assets/complex-cover.webp") center / cover no-repeat; }
+.ph5 { background: linear-gradient(180deg, #2D4F73 0%, #E58F65 60%, #F3C77A 100%); }
+
+/* ---------- Public complex page ---------- */
+.site-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 28px; border-bottom: 1px solid var(--line); }
+.platform-mark { font-family: var(--font-display); font-weight: 650; font-size: 17px; letter-spacing: -0.02em; }
+.platform-mark b { color: var(--accent); font-weight: 650; }
+.site-nav { display: flex; gap: 18px; font-size: 14px; color: var(--muted); align-items: center; }
+.pub { padding: 28px 28px 40px; display: grid; gap: 28px; }
+.pub-title { display: grid; gap: 8px; }
+.pub-title h1 { font-size: 40px; line-height: 1.08; }
+.pub-title .tagline { color: var(--muted); font-size: 17px; max-width: 60ch; }
+.complex-badge { display: inline-flex; align-items: center; gap: 10px; }
+.logo { width: 36px; height: 36px; border-radius: 10px; background: var(--accent); color: var(--accent-fg); display: grid; place-items: center; font-family: var(--font-display); font-weight: 650; font-size: 14px; flex: none; }
+.gallery { display: grid; grid-template-columns: 2fr 1fr 1fr; grid-template-rows: 170px 170px; gap: 8px; }
+.gallery .ph:first-child { grid-row: span 2; }
+.gallery .more { position: absolute; left: auto; right: 10px; bottom: 10px; background: var(--surface); color: var(--fg); font-size: 13px; font-weight: 600; padding: 6px 12px; border-radius: 999px; box-shadow: var(--shadow); }
+.pub-body { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 48px; align-items: start; }
+.pub-main { display: grid; gap: 32px; min-width: 0; }
+.pub-section { display: grid; gap: 12px; padding-top: 24px; border-top: 1px solid var(--line); }
+.pub-section:first-child { border-top: 0; padding-top: 0; }
+.pub-section h2 { font-size: 22px; }
+.pub-section p { max-width: 65ch; }
+.amenities { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 24px; padding: 0; margin: 0; list-style: none; }
+.amenities li { display: flex; gap: 10px; align-items: center; }
+.amenities svg { width: 20px; height: 20px; flex: none; stroke: var(--fg); fill: none; stroke-width: 1.6; }
+.rules { margin: 0; padding-left: 20px; display: grid; gap: 6px; }
+.map { height: 180px; border-radius: var(--r-md); background:
+  linear-gradient(90deg, transparent 49.5%, var(--line) 49.5% 50.5%, transparent 50.5%) 0 0 / 60px 60px,
+  linear-gradient(0deg, transparent 49.5%, var(--line) 49.5% 50.5%, transparent 50.5%) 0 0 / 60px 60px,
+  var(--surface-2); position: relative; }
+.map::after { content: ""; position: absolute; left: 46%; top: 38%; width: 18px; height: 18px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); background: var(--accent); border: 3px solid var(--surface); }
+.stays-later { border: 1px dashed var(--line); border-radius: var(--r-md); padding: 18px; color: var(--muted); display: flex; gap: 10px; align-items: flex-start; flex-wrap: wrap; }
+.side-card { border: 1px solid var(--line); border-radius: var(--r-lg); padding: 22px; display: grid; gap: 14px; box-shadow: var(--shadow); background: var(--surface); position: sticky; top: 16px; }
+.side-card h3 { font-size: 18px; }
+.kv { display: grid; gap: 10px; font-size: 14px; }
+.kv div { display: grid; gap: 2px; }
+.kv dt { color: var(--muted); font-size: 12.5px; }
+.kv dd { margin: 0; font-weight: 500; overflow-wrap: anywhere; }
+.site-foot { border-top: 1px solid var(--line); padding: 18px 28px; color: var(--muted); font-size: 13px; display: flex; flex-wrap: wrap; gap: 8px 20px; justify-content: space-between; }
+
+@container (max-width: 760px) {
+  .site-top { padding: 12px 16px; }
+  .site-nav .hide-sm { display: none; }
+  .pub { padding: 0 0 28px; gap: 20px; }
+  .gallery { order: -1; display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 0; grid-template-rows: none; }
+  .gallery .ph { flex: 0 0 100%; height: 260px; border-radius: 0; scroll-snap-align: start; }
+  .gallery .ph:not(:first-child) { display: none; }
+  .pub-title, .pub-body { padding: 0 16px; }
+  .pub-title h1 { font-size: 30px; }
+  .pub-title .tagline { font-size: 16px; }
+  .pub-body { grid-template-columns: 1fr; gap: 28px; }
+  .amenities { grid-template-columns: 1fr; }
+  .side-card { position: static; box-shadow: none; }
+  .site-foot { padding: 16px; }
+}
+
+/* ---------- Staff workspace (editor + arrivals) ---------- */
+.app { display: grid; grid-template-columns: 248px minmax(0, 1fr); min-height: 760px; }
+.side { border-right: 1px solid var(--line); padding: 18px 14px; display: flex; flex-direction: column; gap: 18px; background: var(--surface); }
+.switcher { display: flex; gap: 10px; align-items: center; padding: 10px; border: 1px solid var(--line); border-radius: var(--r-md); }
+.switcher .who { min-width: 0; }
+.switcher .name { font-weight: 600; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.switcher .role { font-size: 12.5px; color: var(--muted); }
+.nav-group { display: grid; gap: 2px; }
+.nav-group .eyebrow { padding: 0 10px 4px; font-size: 11px; }
+.nav-item { display: flex; align-items: center; gap: 8px; justify-content: space-between; padding: 8px 10px; border-radius: 10px; color: var(--fg); text-decoration: none; font-size: 14px; font-weight: 500; }
+.nav-item[aria-current="page"] { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+.nav-item.later { color: var(--muted); }
+.side .me { margin-top: auto; font-size: 13px; color: var(--muted); padding: 0 10px; }
+.mobile-top, .tabbar { display: none; }
+
+.workspace { min-width: 0; display: flex; flex-direction: column; background: var(--bg); }
+.toolbar { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; padding: 14px 24px; background: var(--surface); border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 2; }
+.toolbar .title { display: grid; gap: 2px; min-width: 0; }
+.toolbar h2 { font-size: 20px; }
+.toolbar .meta { font-size: 13px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; }
+.actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.ed { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 24px; padding: 24px; align-items: start; }
+.toc { display: grid; gap: 2px; position: sticky; top: 84px; font-size: 14px; }
+.toc a { display: flex; justify-content: space-between; align-items: center; padding: 7px 10px; border-radius: 8px; color: var(--muted); text-decoration: none; }
+.toc a.on { color: var(--fg); background: var(--surface); font-weight: 600; }
+.toc .chk { width: 16px; height: 16px; border-radius: 50%; border: 1.5px solid var(--line); flex: none; }
+.toc .chk.done { background: var(--ok); border-color: var(--ok); box-shadow: inset 0 0 0 3px var(--surface); }
+.toc .chk.need { border-color: var(--warn); }
+.cards { display: grid; gap: 16px; min-width: 0; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-md); padding: 20px; display: grid; gap: 16px; }
+.card-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.card-head h3 { font-size: 17px; }
+.card-head p { font-size: 13px; color: var(--muted); }
+.field { display: grid; gap: 6px; }
+.field label { font-size: 13px; font-weight: 600; }
+.field .hint { font-size: 12.5px; color: var(--muted); display: flex; justify-content: space-between; gap: 8px; }
+.field .hint span + span { white-space: nowrap; }
+.input, textarea.input { width: 100%; border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; font: inherit; background: var(--surface); color: var(--fg); }
+textarea.input { min-height: 112px; resize: vertical; line-height: 1.55; }
+.input.changed { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.photos { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.photos .ph { aspect-ratio: 4 / 3; max-width: 100%; min-height: 0; }
+.photos .cover { outline: 2px solid var(--accent); outline-offset: 2px; }
+.photos .add { aspect-ratio: 4 / 3; border: 1.5px dashed var(--line); border-radius: var(--r-sm); display: grid; place-items: center; color: var(--muted); font-size: 13px; font-weight: 600; text-align: center; background: var(--surface); }
+.alt-warn { font-size: 12.5px; color: var(--warn); }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { border: 1px solid var(--line); border-radius: 999px; padding: 6px 12px; font-size: 13.5px; background: var(--surface); }
+.chip[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+.rule-row { display: flex; gap: 8px; align-items: center; }
+.rule-row .input { flex: 1; min-width: 0; }
+.handle { color: var(--muted); font-size: 18px; line-height: 1; cursor: grab; }
+.swatches { display: flex; gap: 10px; flex-wrap: wrap; }
+.sw { display: grid; gap: 6px; justify-items: center; font-size: 12px; color: var(--muted); }
+.sw i { width: 38px; height: 38px; border-radius: 50%; border: 3px solid var(--surface); box-shadow: 0 0 0 1px var(--line); }
+.sw.on i { box-shadow: 0 0 0 2px var(--accent); }
+.lang { display: inline-flex; gap: 2px; background: var(--surface-2); border-radius: 999px; padding: 3px; font-size: 13px; }
+.lang span { padding: 3px 10px; border-radius: 999px; color: var(--muted); }
+.lang .on { background: var(--surface); color: var(--fg); font-weight: 600; }
+.sticky-actions { display: none; }
+
+@container (max-width: 760px) {
+  .app { grid-template-columns: 1fr; min-height: 0; }
+  .side { display: none; }
+  .mobile-top { display: flex; align-items: center; gap: 10px; padding: 12px 16px; background: var(--surface); border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 3; }
+  .mobile-top .name { font-weight: 600; font-size: 15px; flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .toolbar { position: static; padding: 14px 16px; }
+  .toolbar .actions { display: none; }
+  .ed { grid-template-columns: 1fr; padding: 12px 12px 8px; gap: 12px; }
+  .toc { position: static; display: flex; overflow-x: auto; gap: 6px; scrollbar-width: none; }
+  .toc a { flex: none; border: 1px solid var(--line); border-radius: 999px; gap: 8px; background: var(--surface); }
+  .card { padding: 16px; }
+  .two { grid-template-columns: 1fr; }
+  .photos { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .sticky-actions { display: flex; gap: 8px; position: sticky; bottom: 62px; padding: 10px 12px; background: var(--surface); border-top: 1px solid var(--line); z-index: 2; }
+  .sticky-actions .btn { flex: 1; padding: 11px 10px; }
+  .tabbar { display: grid; grid-template-columns: repeat(4, 1fr); position: sticky; bottom: 0; background: var(--surface); border-top: 1px solid var(--line); z-index: 2; }
+  .tabbar a { display: grid; justify-items: center; gap: 2px; padding: 8px 4px 12px; text-decoration: none; color: var(--muted); font-size: 11px; font-weight: 600; position: relative; }
+  .tabbar a[aria-current="page"] { color: var(--accent); }
+  .tabbar svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 1.7; }
+  .tabbar .dot { position: absolute; top: 6px; right: calc(50% - 18px); width: 8px; height: 8px; border-radius: 50%; background: var(--tag); }
+}
+
+/* ---------- Preview of draft ---------- */
+.staff-banner { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; justify-content: space-between; padding: 12px 20px; background: var(--fg); color: var(--surface); }
+.staff-banner p { font-size: 14px; }
+.staff-banner .btn { border-color: transparent; }
+.staff-banner .btn.ghost { color: var(--surface); }
+.changed-mark { box-shadow: inset 3px 0 0 var(--accent); padding-left: 12px; }
+.dialog-wrap { position: absolute; inset: 0; background: var(--scrim); display: grid; place-items: center; padding: 16px; z-index: 5; }
+.dialog { background: var(--surface); border-radius: var(--r-lg); padding: 24px; width: min(440px, 100%); display: grid; gap: 14px; box-shadow: var(--shadow); }
+.dialog h3 { font-size: 20px; }
+.dialog ul { margin: 0; padding-left: 18px; display: grid; gap: 4px; font-size: 14px; }
+.dialog .foot { display: flex; justify-content: flex-end; gap: 8px; flex-wrap: wrap; }
+.dialog .small { font-size: 13px; color: var(--muted); }
+@container (max-width: 760px) {
+  .staff-banner { padding: 10px 16px; position: sticky; top: 0; z-index: 3; }
+  .dialog-wrap { place-items: end center; padding: 0; }
+  .dialog { border-radius: var(--r-lg) var(--r-lg) 0 0; width: 100%; }
+  .dialog .foot .btn { flex: 1; }
+}
+
+/* ---------- Arrivals (design preview) ---------- */
+.preview-banner { display: flex; gap: 12px; align-items: flex-start; padding: 14px 18px; margin: 20px 24px 0; border-radius: var(--r-md); background: var(--tag-soft); color: var(--tag); border: 1px dashed var(--tag); }
+.preview-banner strong { display: block; font-size: 14px; }
+.preview-banner p { font-size: 13.5px; }
+.arr { padding: 20px 24px 28px; display: grid; gap: 16px; }
+.summary { display: flex; flex-wrap: wrap; gap: 10px; }
+.summary div { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-md); padding: 12px 16px; min-width: 140px; }
+.summary b { display: block; font-family: var(--font-display); font-size: 26px; font-variant-numeric: tabular-nums; }
+.summary span { font-size: 13px; color: var(--muted); }
+.list { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-md); overflow: hidden; }
+.row { display: grid; grid-template-columns: 1.1fr 1fr .8fr 1.1fr 1.6fr auto; gap: 12px; align-items: center; padding: 14px 18px; border-top: 1px solid var(--line); font-size: 14px; }
+.row.head { border-top: 0; font-size: 12px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; background: var(--surface-2); padding-block: 10px; }
+.row .unit { font-weight: 600; }
+.row .sub { font-size: 12.5px; color: var(--muted); }
+.row .num { font-variant-numeric: tabular-nums; }
+.link { color: var(--accent); font-weight: 600; font-size: 13.5px; text-decoration: none; white-space: nowrap; }
+@container (max-width: 760px) {
+  .preview-banner { margin: 12px 12px 0; flex-direction: column; gap: 6px; }
+  .arr { padding: 12px; }
+  .summary div { flex: 1; min-width: 0; padding: 10px 12px; }
+  .row.head { display: none; }
+  .row { grid-template-columns: 1fr auto; gap: 4px 12px; padding: 14px 16px; }
+  .row > :nth-child(2) { grid-column: 1; }
+  .row > :nth-child(3) { display: none; }
+  .row > :nth-child(4) { grid-column: 2; grid-row: 1; justify-self: end; }
+  .row > :nth-child(5) { grid-column: 1 / -1; }
+  .row > :nth-child(6) { grid-column: 1 / -1; }
+}
+
+/* =====================================================================
+   Revision 2 — public complex page only (see docs/design.md).
+   Scoped to .v2 so the other screens stay unchanged until approved.
+   ===================================================================== */
+.v2 {
+  --font-ui: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, system-ui, sans-serif;
+  --wrap: 1200px; --gutter: 40px;
+  --r-gallery: 22px; --r-card: 16px; --r-control: 10px;
+  font-family: var(--font-ui); font-size: 16px; line-height: 1.6; font-weight: 400;
+  font-feature-settings: "cv11", "ss01"; color: var(--fg);
+}
+.v2 h1, .v2 h2, .v2 h3 { font-family: var(--font-ui); font-weight: 600; text-wrap: balance; }
+.v2 .wrap { max-width: calc(var(--wrap) + 2 * var(--gutter)); margin-inline: auto; padding-inline: var(--gutter); }
+.v2 .text-2 { color: var(--text-2); }
+
+/* header */
+.v2 .hdr { border-bottom: 1px solid var(--line); }
+.v2 .hdr .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 16px; }
+.v2 .brand { font-weight: 600; font-size: 18px; letter-spacing: -0.015em; }
+.v2 .brand b { color: var(--accent); font-weight: 600; }
+.v2 .hnav { display: flex; align-items: center; gap: 24px; font-size: 15px; color: var(--text-2); }
+.v2 .btn { font-family: var(--font-ui); font-weight: 500; font-size: 15px; border-radius: 999px; padding: 9px 18px; }
+
+/* title block */
+.v2 .intro { display: grid; gap: 8px; padding-block: 32px 24px; }
+.v2 .meta { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; font-size: 15px; color: var(--text-2); }
+.v2 .meta .logo { width: 28px; height: 28px; border-radius: 8px; font-size: 11px; font-family: var(--font-ui); font-weight: 600; }
+.v2 .meta .sep { color: var(--line); }
+.v2 .cx-name { font-size: 40px; line-height: 1.15; letter-spacing: -0.022em; }
+.v2 .cx-name.is-long { font-size: 36px; }
+.v2 .tagline { font-size: 18px; line-height: 1.5; color: var(--text-2); max-width: 62ch; }
+
+/* gallery */
+.v2 .gal-wrap { position: relative; }
+.v2 .gal {
+  display: grid; gap: 8px; border-radius: var(--r-gallery); overflow: hidden;
+  aspect-ratio: 2.15 / 1; max-height: 560px; width: 100%; max-width: 100%; background: var(--surface-2);
+}
+.v2 .gal figure { margin: 0; position: relative; min-width: 0; min-height: 0; overflow: hidden; background: var(--surface-2); }
+.v2 .gal img { width: 100%; height: 100%; display: block; object-fit: cover;
+  object-position: var(--fx, 50%) var(--fy, 50%); transition: filter .2s ease; }
+.v2 .gal figure:hover img { filter: brightness(.92); }
+.v2 .gal[data-layout="5"] { grid-template-columns: 2fr 1fr 1fr; grid-template-rows: 1fr 1fr; }
+.v2 .gal[data-layout="3"] { grid-template-columns: 2fr 1fr; grid-template-rows: 1fr 1fr; }
+.v2 .gal[data-layout="5"] figure:first-child,
+.v2 .gal[data-layout="3"] figure:first-child { grid-row: span 2; }
+.v2 .gal[data-layout="2"] { grid-template-columns: 1fr 1fr; }
+.v2 .gal[data-layout="1"] { aspect-ratio: 2.4 / 1; }
+.v2 .show-all {
+  position: absolute; right: 16px; bottom: 16px; display: inline-flex; align-items: center; gap: 8px;
+  background: var(--surface); color: var(--fg); border: 1px solid var(--fg); border-radius: var(--r-control);
+  padding: 7px 14px; font: 500 14px/1.4 var(--font-ui); box-shadow: 0 1px 3px rgba(0,0,0,.12);
+}
+.v2 .show-all svg { width: 16px; height: 16px; fill: currentColor; }
+.v2 .counter {
+  display: none; position: absolute; right: 12px; bottom: 12px; padding: 3px 10px; border-radius: 999px;
+  background: rgba(17, 24, 24, .72); color: #FFFFFF; font: 500 13px/1.5 var(--font-ui); font-variant-numeric: tabular-nums;
+}
+
+/* body */
+.v2 .body { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 64px; align-items: start; padding-block: 40px 56px; }
+.v2 .main { display: grid; gap: 0; min-width: 0; }
+.v2 .sec { display: grid; gap: 12px; padding-block: 32px; border-top: 1px solid var(--line); }
+.v2 .sec:first-child { border-top: 0; padding-top: 0; }
+.v2 .sec h2 { font-size: 22px; line-height: 1.3; letter-spacing: -0.012em; }
+.v2 .sec p { max-width: 65ch; }
+.v2 .amen { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 32px; }
+.v2 .amen li { display: flex; gap: 12px; align-items: center; }
+.v2 .amen svg { width: 22px; height: 22px; flex: none; stroke: var(--fg); fill: none; stroke-width: 1.5; }
+.v2 .rules { margin: 0; padding-left: 22px; display: grid; gap: 6px; }
+.v2 .small { font-size: 14px; line-height: 1.5; color: var(--text-2); }
+.v2 .map { border-radius: var(--r-card); height: 220px; }
+.v2 .later { border: 1px dashed var(--line); border-radius: var(--r-card); padding: 18px 20px; color: var(--text-2); display: flex; gap: 12px; align-items: flex-start; flex-wrap: wrap; font-size: 15px; }
+.v2 .card { border: 1px solid var(--line); border-radius: var(--r-card); padding: 24px; display: grid; gap: 16px; background: var(--surface);
+  box-shadow: 0 1px 2px rgba(12,30,30,.05), 0 6px 20px rgba(12,30,30,.06); position: sticky; top: 24px; }
+.v2 .card h3 { font-size: 18px; line-height: 1.35; }
+.v2 .card dl { margin: 0; display: grid; gap: 12px; }
+.v2 .card dt { font-size: 14px; color: var(--text-2); }
+.v2 .card dd { margin: 0; font-weight: 500; overflow-wrap: anywhere; }
+.v2 .card .btn { width: 100%; }
+.v2 .foot { border-top: 1px solid var(--line); }
+.v2 .foot .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; padding-block: 20px; font-size: 14px; color: var(--text-2); }
+
+@container (max-width: 1100px) { .v2 { --gutter: 32px; } .v2 .body { grid-template-columns: minmax(0, 1fr) 300px; gap: 40px; } }
+@container (max-width: 760px) {
+  .v2 { --gutter: 20px; }
+  .v2 .hnav .hide-sm { display: none; }
+  .v2 .intro { padding-block: 20px 16px; gap: 6px; }
+  .v2 .meta { gap: 2px 10px; }
+  .v2 .meta .sep { display: none; }
+  .v2 .meta-extra { flex-basis: 100%; padding-left: 38px; }
+  .v2 .cx-name { font-size: 30px; line-height: 1.2; }
+  .v2 .cx-name.is-long { font-size: 28px; }
+  .v2 .tagline { font-size: 16px; }
+  .v2 .gal, .v2 .gal[data-layout] {
+    display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 0; aspect-ratio: 4 / 3; max-height: none;
+    border-radius: 20px; scrollbar-width: none; overscroll-behavior-x: contain;
+  }
+  .v2 .gal::-webkit-scrollbar { display: none; }
+  .v2 .gal figure { display: block; flex: 0 0 100%; scroll-snap-align: start; grid-row: auto; }
+  .v2 .gal figure:hover img { filter: none; }
+  .v2 .show-all { display: none; }
+  .v2 .counter { display: block; }
+  .v2 .body { grid-template-columns: 1fr; gap: 8px; padding-block: 24px 40px; }
+  .v2 .sec { padding-block: 24px; }
+  .v2 .sec h2 { font-size: 20px; }
+  .v2 .amen { grid-template-columns: 1fr; }
+  .v2 .card { position: static; box-shadow: none; }
+}
+
+/* review-board helpers for revision 2 */
+.states { display: grid; gap: 16px; }
+.states h2 { font-size: 20px; }
+.state-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 16px; }
+.state { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-md); padding: 16px; display: grid; gap: 10px; }
+.state .v2 { display: grid; gap: 10px; }
+.state p { font-size: 13.5px; color: var(--muted); }
+.state .gal { max-height: 220px; }
+.state .show-all { right: 10px; bottom: 10px; padding: 4px 10px; font-size: 12px; }
+.name-demo { font-size: 13px; color: var(--muted); }
+.ix { width: 100%; border-collapse: collapse; font-size: 14px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-md); overflow: hidden; }
+.ix th, .ix td { text-align: left; padding: 10px 14px; border-top: 1px solid var(--line); vertical-align: top; }
+.ix th { background: var(--surface-2); font-size: 12.5px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); border-top: 0; }
+.tbl-scroll { overflow-x: auto; }
+.st { display: inline-block; font-size: 12px; font-weight: 600; padding: 2px 8px; border-radius: 6px; white-space: nowrap; }
+.st.mock { color: var(--warn); background: var(--warn-soft); }
+.st.design { color: var(--tag); background: var(--tag-soft); }
+.st.none { color: var(--muted); background: var(--surface-2); }
+</style>
+
+<div class="board">
+  <header class="board-head">
+    <p class="eyebrow">Booking LT · Milestone 1 · Design preview for review</p>
+    <h1>Complex public page and editor</h1>
+    <p class="lede">Static mock-ups, not working software. Names and contacts are fictional placeholders; the cover photo was supplied for review and the other photos are drawn placeholders. Items tagged <span class="tag">Design preview</span> or <span class="tag">Later</span> are outside Milestone 1.</p>
+    <div class="controls">
+      <nav class="seg" aria-label="Screens">
+        <a href="#public" data-tab="public">1 · Public page</a>
+        <a href="#editor" data-tab="editor">2 · Editor</a>
+        <a href="#preview" data-tab="preview">3 · Preview &amp; publish</a>
+        <a href="#arrivals" data-tab="arrivals">4 · Arrivals (future)</a>
+      </nav>
+      <div class="seg" role="group" aria-label="Device">
+        <button type="button" id="dev-desktop" data-device="desktop" aria-pressed="true">Desktop</button>
+        <button type="button" id="dev-mobile" data-device="mobile" aria-pressed="false">Mobile</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===================== 1. PUBLIC PAGE (revision 2) ===================== -->
+  <section class="screen" id="screen-public" data-screen="public">
+    <p class="screen-note"><strong>Public complex page — revision 2.</strong> Contained gallery, one type family, calmer heading. This is the only screen revised so far; the other tabs keep the earlier styling until you approve this direction. The cover photo was supplied for review; the four supporting photos are crops of that same image, standing in for real uploads.</p>
+    <div class="stage"><div class="frame">
+      <div class="browserbar"><span class="dots"><i></i><i></i><i></i></span><span class="url">bookinglt.example/complexes/playa-serena</span></div>
+      <div class="v2">
+        <header class="hdr"><div class="wrap">
+          <span class="brand">Booking<b> LT</b></span>
+          <nav class="hnav"><span class="hide-sm">Stays</span><span class="hide-sm">Complexes</span><span>ES · EN</span><button class="btn" type="button">Sign in</button></nav>
+        </div></header>
+
+        <div class="wrap">
+          <div class="intro">
+            <div class="meta"><span class="logo">PS</span><span>Las Terrenas, Samaná</span><span class="sep" aria-hidden="true">·</span><span class="meta-extra">42 condos · Beachfront</span></div>
+            <h1 class="cx-name">Playa Serena Residences</h1>
+            <p class="tagline">Beachfront condominiums around a quiet garden pool, a short walk from town.</p>
+          </div>
+
+          <div class="gal-wrap">
+            <div class="gal" data-layout="5" tabindex="0" aria-label="Photos of Playa Serena Residences, 5 photos">
+              <figure style="--fx:50%;--fy:62%"><img src="assets/complex-cover.webp" alt="Aerial view of the beach, the garden pool and the condo buildings"></figure>
+              <figure style="--fx:45%;--fy:40%"><img src="assets/crop-pool.webp" alt="Garden pool and lawn"></figure>
+              <figure style="--fx:40%;--fy:45%"><img src="assets/crop-beach.webp" alt="Palm-lined beach in front of the complex"></figure>
+              <figure style="--fx:45%;--fy:50%"><img src="assets/crop-buildings.webp" alt="Condo buildings and parking"></figure>
+              <figure style="--fx:35%;--fy:45%"><img src="assets/crop-cove.webp" alt="Neighbouring cove and small islands"></figure>
+            </div>
+            <button class="show-all" type="button" aria-label="Show all 5 photos"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="1" width="4" height="4" rx="1"/><rect x="6" y="1" width="4" height="4" rx="1"/><rect x="11" y="1" width="4" height="4" rx="1"/><rect x="1" y="6" width="4" height="4" rx="1"/><rect x="6" y="6" width="4" height="4" rx="1"/><rect x="11" y="6" width="4" height="4" rx="1"/><rect x="1" y="11" width="4" height="4" rx="1"/><rect x="6" y="11" width="4" height="4" rx="1"/><rect x="11" y="11" width="4" height="4" rx="1"/></svg>Show all photos</button>
+            <span class="counter" aria-live="polite">1 / 5</span>
+          </div>
+
+          <div class="body">
+            <div class="main">
+              <section class="sec">
+                <h2>About the complex</h2>
+                <p>Playa Serena has 42 privately owned condos in three low buildings set back from the sand. Each condo is rented by its own host; the complex team looks after the grounds, the pool and the front desk.</p>
+                <p>The beach is calm in the morning and busier after lunch. Town, the fish market and two supermarkets are within a ten-minute walk.</p>
+              </section>
+              <section class="sec">
+                <h2>Amenities</h2>
+                <ul class="amen">
+                  <li><svg viewBox="0 0 24 24"><path d="M3 17c2 0 2-1.5 4.5-1.5S10 17 12 17s2-1.5 4.5-1.5S19 17 21 17M3 21c2 0 2-1.5 4.5-1.5S10 21 12 21s2-1.5 4.5-1.5S19 21 21 21M8 14V5a2 2 0 0 1 4 0M16 14V5a2 2 0 0 0-4 0"/></svg>Outdoor pool, 8 am – 8 pm</li>
+                  <li><svg viewBox="0 0 24 24"><path d="M3 18h18M5 18c0-5 3-9 7-9s7 4 7 9M12 9V5"/></svg>Direct beach access</li>
+                  <li><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M9 16V8h4a2.5 2.5 0 0 1 0 5H9"/></svg>Gated parking, 1 space per condo</li>
+                  <li><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg>Front desk, 7 am – 11 pm</li>
+                  <li><svg viewBox="0 0 24 24"><path d="M2 9a15 15 0 0 1 20 0M5.5 12.5a10 10 0 0 1 13 0M9 16a5 5 0 0 1 6 0"/><circle cx="12" cy="19" r="1"/></svg>Wi-Fi in common areas</li>
+                  <li><svg viewBox="0 0 24 24"><path d="M13 3 5 13h6l-1 8 8-10h-6z"/></svg>Backup generator</li>
+                </ul>
+              </section>
+              <section class="sec">
+                <h2>Complex rules</h2>
+                <ol class="rules">
+                  <li>Quiet hours are 10 pm to 8 am.</li>
+                  <li>All guests are registered with the front desk before arrival.</li>
+                  <li>No glass in the pool area.</li>
+                  <li>Pets are allowed only where the condo's host permits them.</li>
+                </ol>
+                <p class="small">Each condo can add its own house rules on its listing.</p>
+              </section>
+              <section class="sec">
+                <h2>Location</h2>
+                <div class="map" role="img" aria-label="Map placeholder"></div>
+                <p>Calle de la Playa, Las Terrenas. Exact directions are shared with confirmed guests.</p>
+              </section>
+              <section class="sec">
+                <h2>Stays at Playa Serena</h2>
+                <div class="later"><span class="tag">Later</span><span>Condos listed by their hosts will appear here once listings launch. Properties for sale and preconstruction projects get their own sections later too.</span></div>
+              </section>
+            </div>
+            <aside class="card" aria-label="Contact">
+              <h3>Contact the front desk</h3>
+              <dl>
+                <div><dt>Hours</dt><dd>Every day, 7 am – 11 pm</dd></div>
+                <div><dt>Phone and WhatsApp</dt><dd>+1 809 555 0142</dd></div>
+                <div><dt>Email</dt><dd>frontdesk@playaserena.example</dd></div>
+              </dl>
+              <button class="btn" type="button" disabled>Browse stays · coming later</button>
+              <p class="small">Bookings are made with each condo's host, not the complex.</p>
+            </aside>
+          </div>
+        </div>
+        <footer class="foot"><div class="wrap"><span>Playa Serena Residences on Booking LT</span><span>Page updated 28 Oct 2026</span></div></footer>
+      </div>
+    </div></div>
+
+    <div class="states">
+      <h2>Gallery with fewer photos</h2>
+      <p class="screen-note">Desktop layouts chosen by photo count. No empty tiles are ever shown. On phones every count uses the same swipeable gallery with a counter.</p>
+      <div class="state-grid">
+        <div class="state"><div class="v2"><div class="gal-wrap"><div class="gal" data-layout="1"><figure style="--fx:50%;--fy:62%"><img src="assets/complex-cover.webp" alt=""></figure></div></div></div><p><strong>1 photo:</strong> one wide image. No "Show all photos" button.</p></div>
+        <div class="state"><div class="v2"><div class="gal-wrap"><div class="gal" data-layout="2"><figure style="--fx:50%;--fy:62%"><img src="assets/complex-cover.webp" alt=""></figure><figure><img src="assets/crop-pool.webp" alt=""></figure></div><button class="show-all" type="button">Show all photos</button></div></div><p><strong>2 photos:</strong> two equal halves.</p></div>
+        <div class="state"><div class="v2"><div class="gal-wrap"><div class="gal" data-layout="3"><figure style="--fx:50%;--fy:62%"><img src="assets/complex-cover.webp" alt=""></figure><figure><img src="assets/crop-pool.webp" alt=""></figure><figure><img src="assets/crop-beach.webp" alt=""></figure></div><button class="show-all" type="button">Show all photos</button></div></div><p><strong>3 or 4 photos:</strong> one large image and two stacked. A fourth photo is reached through "Show all photos".</p></div>
+        <div class="state"><div class="v2"><div class="gal-wrap"><div class="gal" data-layout="5"><figure style="--fx:50%;--fy:62%"><img src="assets/complex-cover.webp" alt=""></figure><figure><img src="assets/crop-pool.webp" alt=""></figure><figure><img src="assets/crop-beach.webp" alt=""></figure><figure><img src="assets/crop-buildings.webp" alt=""></figure><figure><img src="assets/crop-cove.webp" alt=""></figure></div><button class="show-all" type="button">Show all photos</button></div></div><p><strong>5 or more photos:</strong> one large image and four smaller ones. The rest are in "Show all photos".</p></div>
+      </div>
+
+      <h2>Long complex names</h2>
+      <div class="state"><div class="v2"><h1 class="cx-name is-long">Residencial Playa Serena Beach &amp; Garden Condominiums</h1></div><p>Names over 30 characters use the smaller heading size (36 px desktop, 28 px phone) and wrap onto balanced lines. Names are never cut off.</p></div>
+
+      <h2>What works here, and what is only designed</h2>
+      <div class="tbl-scroll"><table class="ix">
+        <thead><tr><th>Interaction</th><th>In this mock-up</th><th>In the product</th></tr></thead>
+        <tbody>
+          <tr><td>Swipe between photos on a phone</td><td><span class="st mock">Works in mock-up</span> plain browser scrolling</td><td><span class="st none">Not built</span></td></tr>
+          <tr><td>Photo counter ("1 / 5") follows the swipe</td><td><span class="st mock">Works in mock-up</span> small script</td><td><span class="st none">Not built</span></td></tr>
+          <tr><td>"Show all photos" opens a full-screen gallery (arrow keys, swipe, Esc to close)</td><td><span class="st design">Designed only</span> button does nothing</td><td><span class="st none">Not built</span></td></tr>
+          <tr><td>Tapping or clicking a photo opens that photo in the full-screen gallery</td><td><span class="st design">Designed only</span></td><td><span class="st none">Not built</span></td></tr>
+          <tr><td>Crop keeps the subject in frame (focal point chosen by the admin)</td><td><span class="st mock">Shown</span> with fixed focal points</td><td><span class="st none">Not built</span> editor control not designed yet</td></tr>
+          <tr><td>Layouts for 1–4 photos</td><td><span class="st mock">Shown</span> as static examples</td><td><span class="st none">Not built</span></td></tr>
+          <tr><td>Language switch, Sign in, Browse stays</td><td><span class="st design">Designed only</span></td><td><span class="st none">Not built</span></td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </section>
+
+  <!-- ===================== 2. EDITOR ===================== -->
+  <section class="screen" id="screen-editor" data-screen="editor" hidden>
+    <p class="screen-note"><strong>Administrator editing.</strong> <em>Earlier styling; will follow revision 2 after approval.</em> One form, grouped into sections. Saving keeps a private draft; the public page only changes when someone publishes. Checks on the left show what publishing still needs.</p>
+    <div class="stage"><div class="frame">
+      <div class="browserbar"><span class="dots"><i></i><i></i><i></i></span><span class="url">bookinglt.example/manage/playa-serena/page</span></div>
+      <div class="app">
+        <aside class="side">
+          <div class="switcher"><span class="logo">PS</span><div class="who"><div class="name">Playa Serena Residences</div><div class="role">Complex administrator</div></div></div>
+          <nav class="nav-group"><span class="eyebrow">Complex</span>
+            <a class="nav-item" href="#editor" aria-current="page">Public page</a>
+            <a class="nav-item later" href="#editor">Announcements <span class="tag">Later</span></a>
+          </nav>
+          <nav class="nav-group"><span class="eyebrow">Operations</span>
+            <a class="nav-item later" href="#arrivals">Arrivals <span class="tag">Design preview</span></a>
+            <a class="nav-item later" href="#arrivals">Guest registration <span class="tag">Design preview</span></a>
+          </nav>
+          <nav class="nav-group"><span class="eyebrow">Settings</span>
+            <a class="nav-item later" href="#editor">Team &amp; access <span class="tag">Later</span></a>
+          </nav>
+          <p class="me">Signed in as Ana Rivas (sample)</p>
+        </aside>
+
+        <div class="workspace">
+          <div class="mobile-top"><span class="logo">PS</span><span class="name">Playa Serena Residences</span><button class="btn ghost" type="button" aria-label="Switch complex or role">Switch</button></div>
+          <div class="toolbar">
+            <div class="title">
+              <h2>Public page</h2>
+              <div class="meta"><span class="pill warn">Unsaved changes</span><span>Draft saved 10:42 · Published 28 Oct by Ana Rivas</span></div>
+            </div>
+            <div class="actions">
+              <span class="lang" aria-label="Content language"><span class="on">Español</span><span>English</span></span>
+              <button class="btn" type="button">Save draft</button>
+              <button class="btn" type="button">Preview</button>
+              <button class="btn primary" type="button">Publish…</button>
+            </div>
+          </div>
+          <div class="ed">
+            <nav class="toc" aria-label="Page sections">
+              <a class="on" href="#editor">Basics <span class="chk done"></span></a>
+              <a href="#editor">Photos <span class="chk need" title="1 photo needs a description"></span></a>
+              <a href="#editor">Amenities <span class="chk done"></span></a>
+              <a href="#editor">Rules <span class="chk done"></span></a>
+              <a href="#editor">Location <span class="chk done"></span></a>
+              <a href="#editor">Contact <span class="chk done"></span></a>
+              <a href="#editor">Brand <span class="chk done"></span></a>
+            </nav>
+            <div class="cards">
+              <section class="card">
+                <div class="card-head"><h3>Basics</h3><p>Shown at the top of the page</p></div>
+                <div class="field"><label for="f-name">Complex name</label><input class="input" id="f-name" value="Playa Serena Residences"><span class="hint"><span>Set by Booking LT. Ask support to change it.</span></span></div>
+                <div class="field"><label for="f-tag">Short description</label><input class="input" id="f-tag" value="Beachfront condominiums around a quiet garden pool, a short walk from town."><span class="hint"><span>One sentence</span><span>79 / 140</span></span></div>
+                <div class="field"><label for="f-about">About the complex</label><textarea class="input changed" id="f-about">Playa Serena has 42 privately owned condos in three low buildings set back from the sand. Each condo is rented by its own host; the complex team looks after the grounds, the pool and the front desk.
+
+The beach is calm in the morning and busier after lunch.</textarea><span class="hint"><span>Plain text. Blank line starts a new paragraph.</span><span>318 / 2,000</span></span></div>
+              </section>
+              <section class="card">
+                <div class="card-head"><h3>Photos</h3><p>Up to 12 · JPEG, PNG or WebP · 10 MB each</p></div>
+                <div class="photos">
+                  <div class="ph ph-real cover" role="img" aria-label="Cover photo: aerial view of the beach and the complex"><span>Cover</span></div>
+                  <div class="ph ph2" role="img" aria-label="Photo 2"><span>2</span></div>
+                  <div class="ph ph3" role="img" aria-label="Photo 3"><span>3</span></div>
+                  <div class="add">+ Add photos</div>
+                </div>
+                <p class="alt-warn">Photo 3 needs a short description for screen readers before you can publish.</p>
+              </section>
+              <section class="card">
+                <div class="card-head"><h3>Amenities</h3><p>Choose from the list</p></div>
+                <div class="chips">
+                  <button class="chip" type="button" aria-pressed="true">Pool</button>
+                  <button class="chip" type="button" aria-pressed="true">Beach access</button>
+                  <button class="chip" type="button" aria-pressed="true">Parking</button>
+                  <button class="chip" type="button" aria-pressed="true">Front desk</button>
+                  <button class="chip" type="button" aria-pressed="true">Wi-Fi in common areas</button>
+                  <button class="chip" type="button" aria-pressed="true">Backup generator</button>
+                  <button class="chip" type="button" aria-pressed="false">Gym</button>
+                  <button class="chip" type="button" aria-pressed="false">Security 24 h</button>
+                  <button class="chip" type="button" aria-pressed="false">Elevator</button>
+                  <button class="chip" type="button" aria-pressed="false">Restaurant</button>
+                </div>
+              </section>
+              <section class="card">
+                <div class="card-head"><h3>Complex rules</h3><p>Drag to reorder</p></div>
+                <div class="rule-row"><span class="handle" aria-hidden="true">⋮⋮</span><input class="input" aria-label="Rule 1" value="Quiet hours are 10 pm to 8 am."><button class="btn ghost" type="button" aria-label="Remove rule 1">Remove</button></div>
+                <div class="rule-row"><span class="handle" aria-hidden="true">⋮⋮</span><input class="input" aria-label="Rule 2" value="All guests are registered with the front desk before arrival."><button class="btn ghost" type="button" aria-label="Remove rule 2">Remove</button></div>
+                <div class="rule-row"><span class="handle" aria-hidden="true">⋮⋮</span><input class="input changed" aria-label="Rule 3" value="No glass in the pool area."><button class="btn ghost" type="button" aria-label="Remove rule 3">Remove</button></div>
+                <div><button class="btn" type="button">+ Add rule</button></div>
+              </section>
+              <section class="card">
+                <div class="card-head"><h3>Contact and brand</h3><p>Public contact details and page colour</p></div>
+                <div class="two">
+                  <div class="field"><label for="f-phone">Phone / WhatsApp</label><input class="input" id="f-phone" value="+1 809 555 0142"></div>
+                  <div class="field"><label for="f-mail">Email</label><input class="input" id="f-mail" value="frontdesk@playaserena.example"></div>
+                </div>
+                <div class="field"><label>Page colour</label>
+                  <div class="swatches">
+                    <span class="sw on"><i style="background:#0D6A73"></i>Lagoon</span>
+                    <span class="sw"><i style="background:#2F5A8A"></i>Harbour</span>
+                    <span class="sw"><i style="background:#8A4B2F"></i>Clay</span>
+                    <span class="sw"><i style="background:#4F6B2F"></i>Palm</span>
+                    <span class="sw"><i style="background:#5B4A8A"></i>Dusk</span>
+                  </div>
+                  <span class="hint"><span>Every option passes contrast checks in light and dark mode.</span></span>
+                </div>
+              </section>
+            </div>
+          </div>
+          <div class="sticky-actions">
+            <button class="btn" type="button">Save draft</button>
+            <button class="btn" type="button">Preview</button>
+            <button class="btn primary" type="button">Publish…</button>
+          </div>
+          <nav class="tabbar" aria-label="Workspace">
+            <a href="#editor" aria-current="page"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>Page</a>
+            <a href="#arrivals"><span class="dot" title="Design preview"></span><svg viewBox="0 0 24 24"><path d="M4 20h16M7 20V8l5-4 5 4v12M10 20v-5h4v5"/></svg>Arrivals</a>
+            <a href="#arrivals"><span class="dot" title="Design preview"></span><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 3v3h6V3M9 12l2 2 4-4"/></svg>Registration</a>
+            <a href="#editor"><svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg>More</a>
+          </nav>
+        </div>
+      </div>
+    </div></div>
+  </section>
+
+  <!-- ===================== 3. PREVIEW & PUBLISH ===================== -->
+  <section class="screen" id="screen-preview" data-screen="preview" hidden>
+    <p class="screen-note"><strong>Preview and publish.</strong> <em>Earlier styling; will follow revision 2 after approval.</em> The draft is shown with the same layout as the public page, behind a dark staff-only banner. Changed sections are marked. Publishing asks for confirmation and lists what will change.</p>
+    <div class="stage"><div class="frame">
+      <div class="browserbar"><span class="dots"><i></i><i></i><i></i></span><span class="url">bookinglt.example/manage/playa-serena/page/preview</span></div>
+      <div class="staff-banner">
+        <p><strong>Draft preview.</strong> Only your complex team can see this. The public page has not changed.</p>
+        <div class="actions"><button class="btn ghost" type="button">Back to editing</button><button class="btn primary" type="button">Publish…</button></div>
+      </div>
+      <div class="site-top">
+        <span class="platform-mark">Booking<b> LT</b></span>
+        <nav class="site-nav"><span class="hide-sm">Stays</span><span class="hide-sm">Complexes</span><span>ES · EN</span></nav>
+      </div>
+      <div class="pub">
+        <div class="pub-title">
+          <div class="complex-badge"><span class="logo">PS</span><span class="eyebrow">Las Terrenas, Samaná</span></div>
+          <h1>Playa Serena Residences</h1>
+          <p class="tagline">Beachfront condominiums around a quiet garden pool, a short walk from town.</p>
+        </div>
+        <div class="gallery" aria-label="Photos">
+          <div class="ph ph-real" role="img" aria-label="Aerial view of the beach, the garden pool and the condo buildings"></div>
+          <div class="ph ph2" role="img" aria-label="Terrace"><span>Sample photo</span></div>
+          <div class="ph ph3" role="img" aria-label="Pool"><span>Sample photo</span></div>
+          <div class="ph ph4" role="img" aria-label="Lobby"><span>Sample photo</span></div>
+          <div class="ph ph5" role="img" aria-label="Bay"><span>Sample photo</span></div>
+        </div>
+        <div class="pub-body">
+          <div class="pub-main">
+            <section class="pub-section changed-mark">
+              <h2>About the complex <span class="tag">Changed</span></h2>
+              <p>Playa Serena has 42 privately owned condos in three low buildings set back from the sand. Each condo is rented by its own host; the complex team looks after the grounds, the pool and the front desk.</p>
+              <p>The beach is calm in the morning and busier after lunch.</p>
+            </section>
+            <section class="pub-section changed-mark">
+              <h2>Complex rules <span class="tag">Changed</span></h2>
+              <ol class="rules"><li>Quiet hours are 10 pm to 8 am.</li><li>All guests are registered with the front desk before arrival.</li><li>No glass in the pool area.</li></ol>
+            </section>
+          </div>
+          <aside class="side-card" aria-label="Contact">
+            <h3>Contact the front desk</h3>
+            <dl class="kv"><div><dt>Phone and WhatsApp</dt><dd>+1 809 555 0142</dd></div><div><dt>Email</dt><dd>frontdesk@playaserena.example</dd></div></dl>
+          </aside>
+        </div>
+      </div>
+      <div class="dialog-wrap">
+        <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="pub-title">
+          <h3 id="pub-title">Publish these changes?</h3>
+          <p class="small">The public page will update for everyone, in Spanish and English.</p>
+          <ul>
+            <li>About the complex: text edited</li>
+            <li>Complex rules: 1 removed, 1 edited</li>
+            <li>Photos: 1 added</li>
+          </ul>
+          <p class="small">The previous version stays in the page history.</p>
+          <div class="foot"><button class="btn" type="button">Cancel</button><button class="btn primary" type="button">Publish now</button></div>
+        </div>
+      </div>
+    </div></div>
+  </section>
+
+  <!-- ===================== 4. ARRIVALS (FUTURE) ===================== -->
+  <section class="screen" id="screen-arrivals" data-screen="arrivals" hidden>
+    <p class="screen-note"><strong>Where arrivals and guest registration will live.</strong> Same workspace, same navigation, its own section under Operations. This screen is a navigation preview for phases 3–4 with invented data. It is not part of Milestone 1, and its fields depend on the open decision about which guest details the complex needs.</p>
+    <div class="stage"><div class="frame">
+      <div class="browserbar"><span class="dots"><i></i><i></i><i></i></span><span class="url">bookinglt.example/manage/playa-serena/arrivals</span></div>
+      <div class="app">
+        <aside class="side">
+          <div class="switcher"><span class="logo">PS</span><div class="who"><div class="name">Playa Serena Residences</div><div class="role">Complex administrator</div></div></div>
+          <nav class="nav-group"><span class="eyebrow">Complex</span>
+            <a class="nav-item" href="#editor">Public page</a>
+            <a class="nav-item later" href="#arrivals">Announcements <span class="tag">Later</span></a>
+          </nav>
+          <nav class="nav-group"><span class="eyebrow">Operations</span>
+            <a class="nav-item" href="#arrivals" aria-current="page">Arrivals <span class="tag">Design preview</span></a>
+            <a class="nav-item later" href="#arrivals">Guest registration <span class="tag">Design preview</span></a>
+          </nav>
+          <nav class="nav-group"><span class="eyebrow">Settings</span>
+            <a class="nav-item later" href="#arrivals">Team &amp; access <span class="tag">Later</span></a>
+          </nav>
+          <p class="me">Signed in as Ana Rivas (sample)</p>
+        </aside>
+        <div class="workspace">
+          <div class="mobile-top"><span class="logo">PS</span><span class="name">Playa Serena Residences</span><button class="btn ghost" type="button">Switch</button></div>
+          <div class="preview-banner"><span class="tag">Design preview</span><div><strong>Not part of Milestone 1. Sample data only.</strong><p>Shows where arrivals will sit in the workspace. Final fields wait on the guest-registration decisions and legal review.</p></div></div>
+          <div class="toolbar">
+            <div class="title"><h2>Arrivals</h2><div class="meta"><span>Thursday 5 November</span></div></div>
+            <div class="actions"><button class="btn" type="button">Today</button><button class="btn" type="button">Next 7 days</button></div>
+          </div>
+          <div class="arr">
+            <div class="summary">
+              <div><b>5</b><span>Arriving today</span></div>
+              <div><b>3</b><span>Leaving today</span></div>
+              <div><b>2</b><span>Rosters need attention</span></div>
+            </div>
+            <div class="list" role="table" aria-label="Arrivals today">
+              <div class="row head" role="row"><span>Condo</span><span>Stay</span><span>Booked via</span><span>Guests</span><span>Registration</span><span></span></div>
+              <div class="row" role="row"><span><span class="unit">B-204</span><div class="sub">Whole condo</div></span><span class="num">5 – 9 Nov · 4 nights</span><span>Booking LT</span><span class="num">3 guests</span><span><span class="pill ok">Reviewed by host</span><div class="sub">Roster v2 · 3 Nov</div></span><a class="link" href="#arrivals">View roster</a></div>
+              <div class="row" role="row"><span><span class="unit">A-110</span><div class="sub">Lock-off studio</div></span><span class="num">5 – 7 Nov · 2 nights</span><span>Other channel</span><span class="num">2 guests</span><span><span class="pill warn">Changes awaiting host review</span><div class="sub">Showing reviewed roster from 1 Nov</div></span><a class="link" href="#arrivals">View roster</a></div>
+              <div class="row" role="row"><span><span class="unit">C-301</span><div class="sub">Whole condo</div></span><span class="num">5 – 12 Nov · 7 nights</span><span>Other channel</span><span class="num">—</span><span><span class="pill bad">Guest names missing</span><div class="sub">Host reminded 4 Nov</div></span><a class="link" href="#arrivals">Details</a></div>
+              <div class="row" role="row"><span><span class="unit">B-108</span><div class="sub">Whole condo</div></span><span class="num">5 – 8 Nov · 3 nights</span><span>Booking LT</span><span class="num">4 guests</span><span><span class="pill ok">Reviewed by host</span><div class="sub">Roster v1 · 30 Oct</div></span><a class="link" href="#arrivals">View roster</a></div>
+            </div>
+            <p class="notice">Guest names open only on request and only for staff of this complex. Front-desk accounts see this list but not commission or page settings.</p>
+          </div>
+          <nav class="tabbar" aria-label="Workspace">
+            <a href="#editor"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>Page</a>
+            <a href="#arrivals" aria-current="page"><span class="dot" title="Design preview"></span><svg viewBox="0 0 24 24"><path d="M4 20h16M7 20V8l5-4 5 4v12M10 20v-5h4v5"/></svg>Arrivals</a>
+            <a href="#arrivals"><span class="dot" title="Design preview"></span><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 3v3h6V3M9 12l2 2 4-4"/></svg>Registration</a>
+            <a href="#arrivals"><svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg>More</a>
+          </nav>
+        </div>
+      </div>
+    </div></div>
+  </section>
+</div>
+
+<script>
+(function () {
+  var tabs = ["public", "editor", "preview", "arrivals"];
+  function show() {
+    var h = (location.hash || "").slice(1);
+    var cur = tabs.indexOf(h) >= 0 ? h : "public";
+    document.querySelectorAll(".screen").forEach(function (s) { s.hidden = s.dataset.screen !== cur; });
+    document.querySelectorAll("[data-tab]").forEach(function (a) {
+      if (a.dataset.tab === cur) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
+    });
+    document.querySelectorAll(".frame").forEach(function (f) { f.scrollTop = 0; });
+  }
+  function setDevice(d) {
+    document.body.dataset.device = d;
+    document.querySelectorAll("[data-device]").forEach(function (b) {
+      if (b.tagName === "BUTTON") b.setAttribute("aria-pressed", String(b.dataset.device === d));
+    });
+    try { localStorage.setItem("blt-device", d); } catch (e) {}
+  }
+  document.querySelectorAll("button[data-device]").forEach(function (b) {
+    b.addEventListener("click", function () { setDevice(b.dataset.device); });
+  });
+  var saved = "desktop";
+  try { saved = localStorage.getItem("blt-device") || "desktop"; } catch (e) {}
+  if (window.innerWidth < 700) saved = "mobile";
+  document.querySelectorAll(".gal-wrap").forEach(function (w) {
+    var g = w.querySelector(".gal"), c = w.querySelector(".counter");
+    if (!g || !c) return;
+    var n = g.querySelectorAll("figure").length;
+    g.addEventListener("scroll", function () {
+      var i = Math.round(g.scrollLeft / Math.max(1, g.clientWidth)) + 1;
+      c.textContent = Math.min(n, Math.max(1, i)) + " / " + n;
+    }, { passive: true });
+  });
+  setDevice(saved);
+  window.addEventListener("hashchange", show);
+  show();
+})();
+</script>

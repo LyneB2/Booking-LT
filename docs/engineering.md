@@ -26,7 +26,8 @@ Last updated: 2026-11-05
 
 ## 2. Proposed architecture and stack
 
-> **Proposal — not yet approved.** Nothing here is installed. Setup commands will
+> **Proposal — not yet approved.** A specific recommendation with services and
+> costs is in [milestones/m1-complex-page.md](milestones/m1-complex-page.md) §7. Nothing here is installed. Setup commands will
 > be added to this document only after they exist and have been verified.
 
 ### 2.1 Shape
@@ -81,7 +82,9 @@ Last updated: 2026-11-05
   harder.
 
 Suggested sequencing: build the web for the complex module first, while keeping
-all logic behind the API so the mobile app can be added without backend changes.
+all logic behind the API. That keeps the mobile app's backend work small, but some
+backend changes should still be expected when the app starts (see
+[milestones/m1-complex-page.md](milestones/m1-complex-page.md) §11).
 
 ## 3. Domain and permission model
 
@@ -180,7 +183,8 @@ To be designed in detail when these features are implemented:
 1. Separate **development, staging and production**: separate databases, storage,
    credentials and payment-provider accounts (sandbox outside production).
 2. Use **fictional development and test data** only. Never copy production guest
-   data into development or staging.
+   data into development or staging. The shared demo dataset and its seed/reset
+   rules are described in [development.md](development.md).
 3. Database changes go through versioned migrations reviewed in PRs.
 
 ## 7. Testing and verification
@@ -234,6 +238,7 @@ verified to run.
 
 ## 10. Current state of this repository
 
-- Contains documentation only. No application code, dependencies, CI or
-  environments exist yet.
-- No setup or verification commands exist yet.
+- Contains documentation, design previews and the demo dataset. No application
+  code, dependencies, CI or environments exist yet.
+- No application setup commands exist yet. Demo-dataset commands are in
+  [development.md](development.md) §3.

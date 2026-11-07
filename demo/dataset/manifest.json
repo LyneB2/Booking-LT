@@ -1,0 +1,40 @@
+{
+  "$notice": "DEMO DATA. Every person, complex, contact detail and text in this folder is fictional. Never load it into production.",
+  "datasetVersion": 1,
+  "updated": "2026-11-07",
+  "dateConvention": "Dates are relative to the moment the seed runs: '-10d' = ten days ago, '+3d@15:00' = three days ahead at 15:00 local time (America/Santo_Domingo). The seed resolves them so the demo always looks current.",
+  "files": {
+    "catalog": "catalog.json",
+    "complexes": "complexes.json",
+    "people": "people.json",
+    "roles": "roles.json",
+    "pages": "pages.json",
+    "media": "media.json"
+  },
+  "coverage": {
+    "seededWhenBuilt": [
+      "complexes",
+      "people (accounts)",
+      "roles: platform_admin, complex_admin, front_desk",
+      "complex pages: drafts and published revisions",
+      "complex page photos"
+    ],
+    "plannedOnly": [
+      "host/cohost/guest relationships (people.json 'plannedRelationships' is narrative only)",
+      "properties and listings",
+      "reservations and guest rosters",
+      "announcements",
+      "messages",
+      "cleaning and maintenance tasks"
+    ],
+    "rule": "Add structured data for a module only when that module is designed or implemented."
+  },
+  "placeholderSource": {
+    "path": "design/previews/assets/complex-cover.webp",
+    "width": 1120,
+    "height": 730,
+    "origin": "Aerial photo supplied by the product owner on 2026-11-05. Carries a faint third-party watermark.",
+    "rightsConfirmed": false,
+    "allowedUse": "Development and internal design previews only. Must not be uploaded to staging or production until rights are confirmed or every crop is replaced."
+  }
+}
