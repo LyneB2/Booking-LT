@@ -1,11 +1,11 @@
 # Milestone 1 — Complex public page: plan and design
 
-Status: **Proposed — awaiting product-owner approval.** Nothing in this document is
-implemented. No code, dependencies, accounts or environments exist yet. When an
-item is approved, move it to the approved decisions in `docs/product.md` or
-`docs/engineering.md`.
+Status: **M1.1 approved on 2026-11-05; M1.2–M1.4 deferred.** Planning and static
+designs originate in open PR #2 and are preserved. Claude builds; Codex independently
+reviews. Foundation verification and missing setup: [../development.md](../development.md).
+No paid resources, production deployment or merges are authorized.
 
-Last updated: 2026-11-05
+Last updated: 2026-11-06
 
 Design previews: [`design/previews/m1-complex-page.html`](../../design/previews/m1-complex-page.html)
 (open in a browser) and screenshots in [`design/previews/screenshots/`](../../design/previews/screenshots/).
@@ -100,8 +100,8 @@ a whole class of script-injection problems. Limits: tagline 140 characters, abou
 
 ## 4. Permissions for this milestone
 
-Checked on the server for every request, by reading active `role_assignments` from
-the database each time. Roles are **not** stored inside sign-in tokens, so a
+Checked on the server for every request, by first refusing missing/disabled profiles, then reading active `role_assignments`
+from the database each time. Roles are **not** stored inside sign-in tokens, so a
 revocation takes effect on the very next request, even in a tab that is already open.
 
 | Action on complex A | Anonymous | Signed in, no role | Front desk of A | Complex admin of A | Complex admin of B | Platform admin | Revoked admin of A |
@@ -128,8 +128,9 @@ Second layer of protection in the database and storage:
   read or write them.
 - That server role may only `INSERT` and `SELECT` on `complex_page_revisions` and
   `audit_events`, so history cannot be edited or deleted by application code.
-- Draft photos sit in a **private** bucket; published photos are copied into a
-  public bucket under the revision's path at publish time.
+- All photos stay in **private** buckets. Public delivery checks committed revision
+  membership. See the atomic publication contract in `engineering.md` §12; no
+  pre-commit public copies or draft URL leakage.
 
 ## 5. How editing, preview and publishing work
 
@@ -140,7 +141,8 @@ Second layer of protection in the database and storage:
    if the stored `draft_version` still matches the one the form loaded. If another
    admin saved in the meantime, the save is refused with a clear message and
    nothing is overwritten. Drafts may be incomplete.
-3. **Preview.** A staff-only page renders the saved draft with the public page's
+3. **Preview.** Unsaved edits disable Preview and Publish and show “Save draft to
+   preview these changes.” After saving, a staff-only page renders the saved draft with the public page's
    layout, under a banner saying it is not public. It is never cached and tells
    search engines not to index it. Changed sections are marked.
 4. **Publish.** A confirmation lists what changed. The server re-checks the role
@@ -150,6 +152,9 @@ Second layer of protection in the database and storage:
    preview, publishing is refused and the admin is asked to preview again. On
    success it stores a new revision, points the public page at it, records an
    audit event and refreshes the public page cache.
+   A later save invalidates the preview. A 409 preserves local edits and requires
+   reconciliation, save and a fresh preview. Publication follows the single-transaction
+   revision/pointer/audit and private-media contract in `engineering.md` §12.
 5. **Public page.** Shows only the published revision. A complex with no published
    revision, or an archived complex, returns "not found".
 
@@ -230,13 +235,13 @@ Each criterion maps to at least one automated test (§10).
 | Domain logic | Plain TypeScript package (`packages/core`) with the authorization rules | Independent of Next.js, reusable by any future API, easy to unit-test. |
 | Validation | **Zod** schemas in a shared package | Same rules in the form and on the server; the server decides. |
 | Database access | **Drizzle ORM** + versioned SQL migrations | Close to SQL, light, reviewable migrations, connects to any PostgreSQL. |
-| Database, auth, file storage | **Supabase** (managed PostgreSQL + Supabase Auth + Supabase Storage) | One vendor for three needs; standard PostgreSQL; auth works for web and Expo; local copy runs in Docker for development and CI. |
+| Database, auth, file storage | **Supabase** (managed PostgreSQL + Supabase Auth + Supabase Storage) | One vendor for three needs; standard PostgreSQL; auth works for web and Expo; cloud PostgreSQL test process needs no Docker; hosted Auth is verified separately. |
 | Sign-in method | Email one-time code via Supabase Auth; TOTP two-factor for platform admins before launch | No passwords to manage; codes work well in a mobile app (magic links are awkward there). |
 | Transactional email | **Resend** (as Supabase Auth's SMTP sender) | Supabase's built-in email is for testing only; Resend's free tier covers this milestone. |
 | Hosting | **Vercel** | Built for Next.js; preview deployment per pull request; simple rollback to a previous deployment. |
 | Tests | **Vitest** (unit/integration), **Playwright** (end-to-end, screenshots), **axe-core** (accessibility) | Mainstream, well documented. |
-| CI | **GitHub Actions** | Runs type checks, lint and all tests on every pull request, against a local Supabase stack. |
-| Repository layout | `pnpm` workspace: `apps/web`, `packages/core`, `packages/schemas`, `packages/db`; `apps/mobile` added later | Small; no extra build orchestration until needed. |
+| CI | **GitHub Actions** | Runs type checks, lint and all tests on every pull request, against disposable PostgreSQL; hosted Supabase checks require configuration. |
+| Repository layout | `npm` workspace: `apps/web`, `packages/core`, `packages/schemas`, `packages/db`; `apps/mobile` added later | Small; no extra build orchestration until needed. |
 | Region | Database in AWS `us-east-1` (N. Virginia), server functions in the same region | Closest common region to the Dominican Republic; keeps database calls fast. |
 
 How we limit lock-in: the app reaches the database over a normal PostgreSQL
@@ -253,7 +258,7 @@ be checked before signing up. Taxes not included.
 | Item | Development | Staging + production for M1 |
 | --- | --- | --- |
 | Vercel | $0 (local) | Pro, about **$20 per member per month** (the free Hobby plan does not allow commercial use) |
-| Supabase | $0 (local Docker copy) | Pro, about **$25/month** per organisation, which includes a small compute credit that covers roughly one small project. A second project (staging) adds about **$10/month**; alternatively staging can use a free project, which pauses when idle and has no backups. |
+| Supabase | $0 (disposable cloud PostgreSQL tests) | Pro, about **$25/month** per organisation, which includes a small compute credit that covers roughly one small project. A second project (staging) adds about **$10/month**; alternatively staging can use a free project, which pauses when idle and has no backups. |
 | Resend | $0 | Free tier, about 3,000 emails/month (100/day) — enough for sign-in codes in M1 |
 | Domain | — | about $10–20/year (needed to send email from your own address) |
 | **Total** | **$0** | **about $45–55/month** plus the domain |
@@ -331,9 +336,9 @@ user with no role; front desk of A; complex admin of A ("Ana"); complex admin of
 ### 10.2 Automated checks run on every pull request
 1. **Type check and lint.**
 2. **Unit tests** — the authorization rules as a table of every actor × action in §4,
-   including revoked and archived cases; content validation for every field limit
+   including disabled accounts, revoked and archived cases; content validation for every field limit
    and rejection case.
-3. **Integration tests against a real PostgreSQL** (local Supabase in CI) — every
+3. **Integration tests against a real PostgreSQL** (disposable PostgreSQL in cloud/CI) — every
    server endpoint for save, preview data, publish, history and role management,
    called as each test account:
    - allowed actions succeed and write exactly the expected rows and audit events;
@@ -395,11 +400,10 @@ Backend changes we **expect** when app work starts (this is not a zero-change pr
 6. Rate limits and abuse protection tuned for app traffic.
 7. Possibly offline-friendly endpoints for front-desk and cleaning staff.
 
-## 12. Questions that block this milestone
+## 12. Setup and decisions remaining for later slices
 
-1. **Stack and spend.** Do you approve the recommended stack (§7.1) and roughly
-   $45–55/month for staging and production? Should the Vercel, Supabase and Resend
-   accounts be created in your name or your business's name, with you as owner?
+1. **Stack approved for M1.1.** Spending is not approved. Service ownership and
+   staging/production provisioning remain setup decisions; create no paid resources.
 2. **Domain.** Do you own a domain for Booking LT? Sign-in emails need a domain we
    can verify for sending. Staging can use a free Vercel address until then.
 3. **Languages.** Must complex page content be in both **Spanish and English** at
@@ -409,8 +413,8 @@ Backend changes we **expect** when app work starts (this is not a zero-change pr
    right after it? A page without photos is usable for testing, but not for showing
    to complexes.
 
-Answers to these change the data model or the work plan. Everything else uses the
-defaults in this document unless you say otherwise.
+Languages and photos do not block M1.1, which contains no page content editor.
+Hosted Auth configuration is listed precisely in `development.md`.
 
 ## 13. Decisions deferred (documented, not needed now)
 
@@ -425,11 +429,12 @@ defaults in this document unless you say otherwise.
 
 ## 14. Implementation slices after approval
 
-Each slice is its own branch and pull request, reviewed before the next starts.
+Each slice is its own branch and pull request, independently reviewed by Codex
+before the next starts. Only M1.1 is authorized now.
 
 | Slice | Contents | Done when |
 | --- | --- | --- |
-| M1.1 Foundation | Workspace, Next.js app, Drizzle schema and migrations, local Supabase, CI, email-code sign-in, platform-admin bootstrap command, minimal complex and role admin screen, authorization module with its full test table | Criteria 1–3, 14 (role screens), 17, 20 pass in CI |
+| M1.1 Foundation | Workspace, Next.js app, Drizzle schema and migrations, Docker-free cloud PostgreSQL, CI, email-code sign-in, platform-admin bootstrap command, minimal complex and role admin screen, authorization module with its full test table | Criteria 2–3, 14 (role screens), 17, 20 in cloud/CI; criterion 1 requires hosted Auth verification |
 | M1.2 Page draft and publish | Editor, save with version check, preview, publish, revisions, public page, audit events, end-to-end tests | Criteria 4–16, 18–19 pass |
-| M1.3 Photos (if approved) | Upload, processing, private drafts, public copies at publish | Criteria 22–24 pass |
+| M1.3 Photos (if approved) | Upload, processing, private objects, committed-revision media delivery | Criteria 22–24 pass |
 | M1.4 Staging | Staging deploy, fictional seed data, screenshots, manual checks | Criterion 21; §10.3 complete |

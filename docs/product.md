@@ -4,7 +4,7 @@ Status: **Draft for review.** This document records the product requirements and
 decisions approved so far. Anything listed under [Open decisions](#8-open-decisions)
 is not decided and must not be assumed by design or code.
 
-Last updated: 2026-11-05
+Last updated: 2026-11-06
 
 ---
 
@@ -190,7 +190,7 @@ frontend, backend and database. Order may change after review.
 
 | Phase | Focus | Notes |
 | --- | --- | --- |
-| 0 | Documentation, domain & permission model, stack decision, representative designs | Current phase. No application code. |
+| 0 | Documentation, domain & permission model, stack decision, representative designs | Planning and static designs preserved from PR #2. |
 | 1 | **Complex module** | Accounts, platform admin adds a complex, complex roles (admin, front desk), editable branded complex page, rules, amenities, announcements. Milestone 1 (edit, preview and publish the complex page) is proposed in [milestones/m1-complex-page.md](milestones/m1-complex-page.md). |
 | 2 | Hosts, properties and listings | Host profiles, properties linked to complexes, listing editing, admin-prepared drafts with invitation + claim verification, cohost grants. |
 | 3 | Guest registration and arrivals | External reservation entry, structured guest registration with completeness and change history, arrivals/departures for complex staff. Replaces the Beach Residences email workflow. |
@@ -203,9 +203,9 @@ frontend, backend and database. Order may change after review.
 
 | Area | Status |
 | --- | --- |
-| Product and engineering documentation | Draft (this PR) |
-| Milestone 1 plan and design previews ([docs/milestones/m1-complex-page.md](milestones/m1-complex-page.md)) | **Proposed; awaiting approval.** Previews are static mock-ups with fictional content |
-| Application code, database | **Not started** |
+| Product and engineering documentation | Shared requirements; updated for Claude building / Codex reviewing |
+| Milestone 1 plan and design previews ([docs/milestones/m1-complex-page.md](milestones/m1-complex-page.md)) | M1.1 approved; later slices deferred. Previews are static mock-ups with fictional content |
+| Application foundation | M1.1 implementation; see [development.md](development.md) for verification and service setup |
 | Pagadito integration | **External testing underway; not verified; not in this repository** |
 
 This table must be kept honest: mark items as implemented, mocked, untested or
@@ -224,6 +224,15 @@ unfinished. Never call the product bug-free or production-ready without evidence
 7. Provider-managed payment allocation is required. Collecting the full payment
    in the platform account for onward distribution is outside the approved model;
    changing it requires explicit product-owner approval.
+
+8. M1.1 application foundation and TypeScript, Next.js, Supabase, Drizzle, Zod,
+   Vitest and Playwright approved on 2026-11-05. Vercel is the planned web host;
+   Resend will deliver Supabase email codes when configured. No approval for later
+   slices or spending.
+9. As of 2026-11-06, Claude is the primary builder and Codex independently reviews.
+   Preserve the original Claude mockups as the preferred visual direction. Existing
+   M1.1 implementation remains available for assessment and reuse; changing builders
+   does not authorize a rewrite, merge, paid resources or production deployment.
 
 ## 8. Open decisions
 
@@ -258,4 +267,4 @@ Numbered so they can be answered by number.
 13. **Cancellation and refund policies** — platform-wide, per host, or per complex.
 14. **Brand** — the repository description says "booking rentals in LT"; confirm
     what "LT" refers to and whether "Booking LT" is the final product name.
-15. **Development stack** — see the proposal in [engineering.md](engineering.md#2-proposed-architecture-and-stack).
+15. **Service ownership and launch setup** — Vercel is planned; Supabase and Resend require development credentials and sending-domain setup. No paid resources authorized.

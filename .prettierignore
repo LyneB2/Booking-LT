@@ -1,0 +1,8 @@
+node_modules
+.next
+package-lock.json
+design
+*.md
+*.sql
+test-results
+playwright-report

@@ -3,7 +3,7 @@
 Status: **Draft for review.** Shared by every contributor and coding agent
 (Claude, Codex, others). The product requirements live in [product.md](product.md).
 
-Last updated: 2026-11-05
+Last updated: 2026-11-06
 
 ---
 
@@ -24,11 +24,12 @@ Last updated: 2026-11-05
    unfinished**. Never claim the product is bug-free or production-ready without
    evidence.
 
-## 2. Proposed architecture and stack
+## 2. Approved M1.1 architecture and stack
 
-> **Proposal — not yet approved.** A specific recommendation with services and
-> costs is in [milestones/m1-complex-page.md](milestones/m1-complex-page.md) §7. Nothing here is installed. Setup commands will
-> be added to this document only after they exist and have been verified.
+TypeScript, Next.js, Supabase, Drizzle, Zod, Vitest and Playwright are approved
+for M1.1 (2026-11-05). Vercel is planned; Resend will be Supabase's SMTP sender.
+No paid service or production deployment is authorized. See
+[development.md](development.md) for commands and setup boundaries.
 
 ### 2.1 Shape
 
@@ -54,7 +55,7 @@ Last updated: 2026-11-05
 - Multi-complex ("multi-tenant") data lives in one database. Every complex-owned
   row carries its `complex_id`; property-owned rows carry `property_id`.
 
-### 2.2 Recommended stack (to be confirmed)
+### 2.2 Stack
 
 | Concern | Recommendation | Why |
 | --- | --- | --- |
@@ -63,9 +64,9 @@ Last updated: 2026-11-05
 | Mobile | Expo (React Native), one app for iOS and Android | Shares language, validation and API client with web; managed builds and over-the-air updates; avoids two native codebases. |
 | Backend | Server code inside the Next.js app at first, with domain logic in plain TypeScript modules independent of the framework | Fewer moving parts. Can be split into a separate API service later without rewriting domain logic. |
 | Database | PostgreSQL | Transactions, constraints (incl. exclusion constraints for overlapping date ranges), row-level security if needed. |
-| Data access | A typed query builder/ORM with versioned migrations (e.g. Drizzle or Prisma) | Reviewable schema changes. |
-| Validation | A schema library (e.g. Zod) shared by client and server | Same rules on both sides; server is authoritative. |
-| Auth | An established provider/library (e.g. Auth.js, Clerk, or Supabase Auth) — never home-made password or session handling | Security-sensitive; supports web and mobile. |
+| Data access | Drizzle ORM with versioned SQL migrations | Reviewable schema changes. |
+| Validation | Zod shared by client and server | Same rules on both sides; server is authoritative. |
+| Auth | Supabase Auth — never home-made password or session handling | Security-sensitive; supports web and mobile. |
 | Storage | S3-compatible object storage with signed URLs | Private by default; guest documents never public. |
 | Monorepo | One repository with `apps/web`, `apps/mobile`, `packages/*` (shared types, validation, API client) | Keeps web and mobile in sync. |
 
@@ -219,8 +220,8 @@ verified to run.
 1. One focused **feature branch per change**; small pull requests.
 2. Every PR states: what changed, how it was tested (with real output), and what is
    **implemented / mocked / untested / unfinished**.
-3. PRs are reviewed independently (e.g. by Codex or a human) before merge. Agents
-   do not merge their own PRs.
+3. Claude is the primary builder; Codex independently reviews implementation PRs.
+   Agents do not merge their own PRs. The owner controls merge and release.
 4. UI PRs include desktop and mobile screenshots.
 5. Approved requirement or design changes update `docs/` in the same PR.
 
@@ -237,6 +238,74 @@ verified to run.
 
 ## 10. Current state of this repository
 
-- Contains documentation only. No application code, dependencies, CI or
-  environments exist yet.
-- No setup or verification commands exist yet.
+M1.1 implements the application foundation. The page editor, save/preview/publish,
+photos, bookings, payments and mobile UI are deferred. Verification evidence and
+missing hosted-service setup are recorded in [development.md](development.md).
+The publication contract below is a requirement for M1.2/M1.3, not shipped behavior.
+
+## 11. Authorization and concurrency contract
+
+A valid Supabase identity is necessary but insufficient: every protected request
+must load the current profile and reject a missing or disabled account, then read
+current non-revoked assignments. Neither JWT claims nor browser state grants a
+role. This applies to cookies, refreshed sessions and mobile bearer tokens alike.
+A disabled platform admin is also refused. Public published content remains public.
+
+Protected operations authorize and operate within one database transaction. M1.1
+serializes its low-volume authorization-sensitive transactions with a transaction
+advisory lock (including bootstrap). Revocation and account disable must take the
+same lock. Thus an in-flight authorized operation finishes before revocation;
+every operation started after revocation commits is refused, using the same token.
+Do not cache permissions. Before scaling, replace this coarse lock with an ordered
+per-account lock protocol with equivalent race tests. Operator SQL bypassing this
+protocol is maintenance, not the supported runtime path.
+
+## 12. Future atomic publication and private media contract
+
+M1.2: save uses compare-and-swap on `draft_version`; a stale save returns 409 and
+changes no rows. Preview is an authenticated, no-store, noindex rendering of the
+**saved** version and returns an actor-, complex-, version- and expiry-bound preview
+receipt (server-held or signed). The form must save first, then preview, then
+publish from that preview. Unsaved edits disable Preview/Publish with an explicit
+Save draft action; leaving warns about unsaved changes. Saving again invalidates
+the old preview. Another editor's save makes publication return 409, preserves
+local text and asks the editor to reload/reconcile, save and preview again.
+
+Publication rechecks the active account, role, active complex, preview receipt and
+complete content. In **one database transaction**, take the authorization lock,
+lock the page row `FOR UPDATE`, compare the expected version, allocate the next
+revision, insert the immutable content and media references, update the public
+revision pointer, consume the receipt and append the audit event. Constraints bind
+the pointer and media references to the same complex. A unique publication request
+key makes retries return the same committed revision; concurrent publishes of one
+preview cannot create duplicate revisions. Any failure rolls everything back.
+Cache invalidation runs after commit, is retryable, and must never read drafts;
+a failed invalidation may leave the old published version temporarily visible.
+
+M1.3: all upload and processed objects remain in **private buckets**, including
+revision media. Do not copy draft photos to a public bucket before committing.
+Public image delivery resolves a media reference through a committed published
+revision before streaming immutable processed bytes. A guessed object key grants
+no access, and no public signed URL is issued for an unpublished object. Admin
+preview URLs are short-lived, authorized and never reused as public URLs.
+
+Uploads use random server-owned keys and a database upload record. Validate bytes,
+size, MIME, dimensions and ownership; re-encode and strip metadata before marking
+ready. Never attach pending/failed/quarantined uploads. Processing or storage
+failure leaves no publishable reference and supports retry with an idempotency
+key. Publication refuses missing/not-ready objects and commits no revision or
+pointer. Never make object-storage operations part of a fictitious database
+transaction: processing completes privately before publication. Orphan cleanup
+expires failed/unattached uploads after a grace period, rechecks references under
+lock, and never deletes media held by a committed revision. Publication failure
+leaves objects private for retry/cleanup; a lost response is resolved via the
+publication request key.
+
+Required M1.2/M1.3 PostgreSQL and storage integration tests: simultaneous saves;
+save versus publish; two publishes of one preview; stale/expired/wrong-actor
+receipt; audit insertion failure rolls back revision and pointer; retry after
+commit/response loss; revocation/disable during publication; cross-complex media;
+failed/partial upload and processing; missing object; failed publication leaves
+photo URL inaccessible; direct private-bucket access refused; public media appears
+only after commit; orphan cleanup cannot delete referenced revisions. These tests
+are deferred with those features and are not M1.1 test claims.

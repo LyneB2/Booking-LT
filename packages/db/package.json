@@ -1,0 +1,13 @@
+{
+  "name": "@booking-lt/db",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "exports": "./src/index.ts",
+  "dependencies": {
+    "drizzle-orm": "0.45.4",
+    "postgres": "4.0.0",
+    "@booking-lt/core": "*",
+    "@booking-lt/schemas": "*"
+  }
+}
