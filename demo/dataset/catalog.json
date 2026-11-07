@@ -1,0 +1,29 @@
+{
+  "$notice": "DEMO DATA. Proposed catalogues used by the demo; the product's final catalogues are set when the module is built.",
+  "brandPresets": ["lagoon", "harbour", "clay", "palm", "dusk"],
+  "settings": {
+    "beachfront": { "es": "Frente al mar", "en": "Beachfront" },
+    "beach_walk": { "es": "A pasos de la playa", "en": "Short walk to the beach" },
+    "town": { "es": "En el pueblo", "en": "In town" },
+    "hillside": { "es": "En la colina", "en": "Hillside" }
+  },
+  "amenities": {
+    "pool": { "es": "Piscina", "en": "Pool" },
+    "kids_pool": { "es": "Piscina infantil", "en": "Children's pool" },
+    "beach_access": { "es": "Acceso directo a la playa", "en": "Direct beach access" },
+    "beach_chairs": { "es": "Tumbonas en la playa", "en": "Beach loungers" },
+    "ocean_view": { "es": "Vista al mar", "en": "Ocean view" },
+    "garden": { "es": "Jardines", "en": "Gardens" },
+    "bbq_area": { "es": "Área de barbacoa", "en": "Barbecue area" },
+    "parking": { "es": "Estacionamiento", "en": "Parking" },
+    "front_desk": { "es": "Recepción", "en": "Front desk" },
+    "security_24h": { "es": "Seguridad 24 horas", "en": "24-hour security" },
+    "wifi_common": { "es": "Wi-Fi en áreas comunes", "en": "Wi-Fi in common areas" },
+    "backup_power": { "es": "Planta eléctrica", "en": "Backup generator" },
+    "elevator": { "es": "Ascensor", "en": "Elevator" },
+    "gym": { "es": "Gimnasio", "en": "Gym" },
+    "laundry": { "es": "Lavandería", "en": "Laundry room" },
+    "restaurant": { "es": "Restaurante", "en": "Restaurant" },
+    "accessible_entrance": { "es": "Entrada accesible", "en": "Step-free entrance" }
+  }
+}

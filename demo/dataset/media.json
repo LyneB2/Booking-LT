@@ -1,0 +1,181 @@
+{
+ "$notice": "DEMO DATA. Demo photos. 'source' is 'placeholder' (drawn by demo/tools/make_placeholders.py) until replaced with an AI-generated image made from 'aiPrompt'; then set source to 'ai-generated' and record the tool used. Alt text lives in pages.json.",
+ "media": [
+  {
+   "key": "m_ps_01",
+   "complex": "cx_playa_serena",
+   "file": "demo/media/playa-serena/m_ps_01.webp",
+   "subject": "Aerial view of beach, lawns and buildings",
+   "source": "placeholder",
+   "aiPrompt": "Drone photo of a calm turquoise bay with a palm-lined beach, wide lawns and three low white four-storey condo buildings with brown roofs, garden pool visible. Photorealistic travel photograph, natural daylight, Dominican Republic north-east coast, no people's faces, no text, no logos, no watermarks."
+  },
+  {
+   "key": "m_ps_02",
+   "complex": "cx_playa_serena",
+   "file": "demo/media/playa-serena/m_ps_02.webp",
+   "subject": "Garden pool",
+   "source": "placeholder",
+   "aiPrompt": "Rectangular outdoor pool surrounded by lawn and coconut palms, white loungers, low white building behind, mid-morning. Photorealistic travel photograph, natural daylight, Dominican Republic north-east coast, no people's faces, no text, no logos, no watermarks."
+  },
+  {
+   "key": "m_ps_03",
+   "complex": "cx_playa_serena",
+   "file": "demo/media/playa-serena/m_ps_03.webp",
+   "subject": "Beach in front of the complex",
+   "source": "placeholder",
+   "aiPrompt": "Wide sandy beach with leaning coconut palms and gentle waves, empty in the early morning. Photorealistic travel photograph, natural daylight, Dominican Republic north-east coast, no people's faces, no text, no logos, no watermarks."
+  },
+  {
+   "key": "m_ps_04",
+   "complex": "cx_playa_serena",
+   "file": "demo/media/playa-serena/m_ps_04.webp",
+   "subject": "Building exterior",
+   "source": "placeholder",
+   "aiPrompt": "White four-storey Caribbean condo building with balconies and dark roofs, tropical garden in front. Photorealistic travel photograph, natural daylight, Dominican Republic north-east coast, no people's faces, no text, no logos, no watermarks."
+  },
+  {
+   "key": "m_ps_05",
+   "complex": "cx_playa_serena",
+   "file": "demo/media/playa-serena/m_ps_05.webp",
+   "subject": "Lobby and front desk",
+   "source": "placeholder",
+   "aiPrompt": "Open-air lobby with tiled floor, wooden reception counter, ceiling fans and potted palms. Photorealistic travel photograph, natural daylight, Dominican Republic north-east coast, no people's faces, no text, no logos, no watermarks."
+  },
+  {
+   "key": "m_ps_06",
+   "complex": "cx_playa_serena",
+   "file": "demo/media/playa-serena/m_ps_06.webp",
+   "subject": "Garden path",
+   "source": "placeholder",
+   "aiPrompt": "Stone path through a tropical garden with hibiscus and palms leading toward the sea. Photorealistic travel photograph, natural daylight, Dominican Republic north-east coast, no people's faces, no text, no logos, no watermarks."
+  },
+  {
+   "key": "m_ps_07",
+   "complex": "cx_playa_serena",
+   "file": "demo/media/playa-serena/m_ps_07.webp",
+   "subject": "Sunset over the bay",
+   "source": "placeholder",
+   "aiPrompt": "Sunset over a small bay with silhouetted palms and a rocky islet. Photorealistic travel photograph, natural daylight, Dominican Republic north-east coast, no people's faces, no text, no logos, no watermarks."
+  },
+  {
+   "key": "m_ps_08",
+   "complex": "cx_playa_serena",
+   "file": "demo/media/playa-serena/m_ps_08.webp",
+   "subject": "Parking and entrance gate",
+   "source": "placeholder",
+   "aiPrompt": "Gated entrance with a guard booth and shaded parking under palms. Photorealistic travel photograph, natural daylight, Dominican Republic north-east coast, no people's faces, no text, no logos, no watermarks."
+  },
+  {
+   "key": "m_ps_09",
+   "complex": "cx_playa_serena",
+   "file": "demo/media/playa-serena/m_ps_09.webp",
+   "subject": "New beach loungers (draft upload)",
+   "source": "placeholder",
+   "aiPrompt": "Row of new white beach loungers with sun umbrellas on a palm-shaded beach. Photorealistic travel photograph, natural daylight, Dominican Republic north-east coast, no people's faces, no text, no logos, no watermarks."
+  },
+  {
+   "key": "m_ba_01",
+   "complex": "cx_bahia_almendro",
+   "file": "demo/media/bahia-almendro/m_ba_01.webp",
+   "subject": "Pool facing Playa Bonita",
+   "source": "placeholder",
+   "aiPrompt": "Infinity-edge pool with dark stone deck facing a long beach with surf and palms, late afternoon. Photorealistic travel photograph, natural daylight, Dominican Republic north-east coast, no people's faces, no text, no logos, no watermarks."
+  },
+  {
+   "key": "m_ba_02",
+   "complex": "cx_bahia_almendro",
+   "file": "demo/media/bahia-almendro/m_ba_02.webp",
+   "subject": "Stone path and almond trees",
+   "source": "placeholder",
+   "aiPrompt": "Stone path under sea almond trees between two low buildings with dark wood shutters. Photorealistic travel photograph, natural daylight, Dominican Republic north-east coast, no people's faces, no text, no logos, no watermarks."
+  },
+  {
+   "key": "m_ba_03",
+   "complex": "cx_bahia_almendro",
+   "file": "demo/media/bahia-almendro/m_ba_03.webp",
+   "subject": "Terrace with ocean view",
+   "source": "placeholder",
+   "aiPrompt": "Covered terrace with wooden furniture and an ocean view through palms. Photorealistic travel photograph, natural daylight, Dominican Republic north-east coast, no people's faces, no text, no logos, no watermarks."
+  },
+  {
+   "key": "m_ba_04",
+   "complex": "cx_bahia_almendro",
+   "file": "demo/media/bahia-almendro/m_ba_04.webp",
+   "subject": "Beach at sunrise",
+   "source": "placeholder",
+   "aiPrompt": "Long beach with soft waves at sunrise, a few fishing boats far out. Photorealistic travel photograph, natural daylight, Dominican Republic north-east coast, no people's faces, no text, no logos, no watermarks."
+  },
+  {
+   "key": "m_ba_05",
+   "complex": "cx_bahia_almendro",
+   "file": "demo/media/bahia-almendro/m_ba_05.webp",
+   "subject": "Co-working corner",
+   "source": "placeholder",
+   "aiPrompt": "Quiet shaded co-working corner with a long wooden table and plants, open to the garden. Photorealistic travel photograph, natural daylight, Dominican Republic north-east coast, no people's faces, no text, no logos, no watermarks."
+  },
+  {
+   "key": "m_plg_01",
+   "complex": "cx_patio_las_garzas",
+   "file": "demo/media/patio-las-garzas/m_plg_01.webp",
+   "subject": "Courtyard",
+   "source": "placeholder",
+   "aiPrompt": "Small colourful courtyard with turquoise and coral walls, a mango tree, hammocks and bicycles, two-storey apartments around it. Photorealistic travel photograph, natural daylight, Dominican Republic north-east coast, no people's faces, no text, no logos, no watermarks."
+  },
+  {
+   "key": "m_ca_01",
+   "complex": "cx_costa_ambar",
+   "file": "demo/media/costa-ambar/m_ca_01.webp",
+   "subject": "Beach with kitesurfers",
+   "source": "placeholder",
+   "aiPrompt": "Lively beach with colourful kites in the sky and a modern three-storey building behind palms. Photorealistic travel photograph, natural daylight, Dominican Republic north-east coast, no people's faces, no text, no logos, no watermarks."
+  },
+  {
+   "key": "m_ca_02",
+   "complex": "cx_costa_ambar",
+   "file": "demo/media/costa-ambar/m_ca_02.webp",
+   "subject": "Rooftop terrace",
+   "source": "placeholder",
+   "aiPrompt": "Rooftop terrace with loungers and a plunge pool overlooking the sea at golden hour. Photorealistic travel photograph, natural daylight, Dominican Republic north-east coast, no people's faces, no text, no logos, no watermarks."
+  },
+  {
+   "key": "m_ca_03",
+   "complex": "cx_costa_ambar",
+   "file": "demo/media/costa-ambar/m_ca_03.webp",
+   "subject": "Suite building",
+   "source": "placeholder",
+   "aiPrompt": "Modern white three-storey building with glass balconies and palms. Photorealistic travel photograph, natural daylight, Dominican Republic north-east coast, no people's faces, no text, no logos, no watermarks."
+  },
+  {
+   "key": "m_ca_04",
+   "complex": "cx_costa_ambar",
+   "file": "demo/media/costa-ambar/m_ca_04.webp",
+   "subject": "Board storage",
+   "source": "placeholder",
+   "aiPrompt": "Tidy board and kite storage room with racks. Photorealistic travel photograph, natural daylight, Dominican Republic north-east coast, no people's faces, no text, no logos, no watermarks."
+  },
+  {
+   "key": "m_ca_05",
+   "complex": "cx_costa_ambar",
+   "file": "demo/media/costa-ambar/m_ca_05.webp",
+   "subject": "Beach bar street",
+   "source": "placeholder",
+   "aiPrompt": "Sandy street lined with beach bars and palms in daylight. Photorealistic travel photograph, natural daylight, Dominican Republic north-east coast, no people's faces, no text, no logos, no watermarks."
+  },
+  {
+   "key": "m_ca_06",
+   "complex": "cx_costa_ambar",
+   "file": "demo/media/costa-ambar/m_ca_06.webp",
+   "subject": "Garden at night",
+   "source": "placeholder",
+   "aiPrompt": "Garden lit by warm lanterns at night with palms. Photorealistic travel photograph, natural daylight, Dominican Republic north-east coast, no people's faces, no text, no logos, no watermarks."
+  },
+  {
+   "key": "m_ac_01",
+   "complex": "cx_altos_coson",
+   "file": "demo/media/altos-coson/m_ac_01.webp",
+   "subject": "Hillside view",
+   "source": "placeholder",
+   "aiPrompt": "Hillside view over a long beach and green hills. Photorealistic travel photograph, natural daylight, Dominican Republic north-east coast, no people's faces, no text, no logos, no watermarks."
+  }
+ ]
+}

@@ -183,7 +183,8 @@ To be designed in detail when these features are implemented:
 1. Separate **development, staging and production**: separate databases, storage,
    credentials and payment-provider accounts (sandbox outside production).
 2. Use **fictional development and test data** only. Never copy production guest
-   data into development or staging.
+   data into development or staging. The shared demo dataset and its seed/reset
+   rules are described in [development.md](development.md).
 3. Database changes go through versioned migrations reviewed in PRs.
 
 ## 7. Testing and verification
@@ -237,6 +238,7 @@ verified to run.
 
 ## 10. Current state of this repository
 
-- Contains documentation only. No application code, dependencies, CI or
-  environments exist yet.
-- No setup or verification commands exist yet.
+- Contains documentation, design previews and the demo dataset. No application
+  code, dependencies, CI or environments exist yet.
+- No application setup commands exist yet. Demo-dataset commands are in
+  [development.md](development.md) §3.

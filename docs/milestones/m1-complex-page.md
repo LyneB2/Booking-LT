@@ -55,7 +55,7 @@ PostgreSQL. Names are proposals. Every complex-owned row carries `complex_id`.
 | Table | Purpose | Key columns |
 | --- | --- | --- |
 | `profiles` | App-side record for each signed-in account (identity lives in the auth provider) | `id` (= auth user id), `display_name`, `disabled_at`, `created_at` |
-| `complexes` | One row per complex | `id`, `slug` (unique, lowercase `a-z0-9-`), `name`, `country_code` (`DO`), `status` (`active` / `archived`), `created_by`, `created_at` |
+| `complexes` | One row per complex | `id`, `slug` (unique, lowercase `a-z0-9-`), `name`, `locality` (e.g. Las Terrenas), `region` (e.g. Samaná), `country_code` (`DO`), `status` (`active` / `archived`), `created_by`, `created_at` |
 | `role_assignments` | Who holds which role, where | `id`, `user_id`, `role` (`platform_admin` / `complex_admin` / `front_desk`), `complex_id` (null only for `platform_admin`), `granted_by`, `granted_at`, `revoked_by`, `revoked_at` |
 | `complex_pages` | The current editable draft, one per complex | `complex_id` (PK), `draft` (JSON), `draft_version` (integer, +1 per save), `draft_updated_by`, `draft_updated_at`, `published_revision_id` |
 | `complex_page_revisions` | Immutable snapshot created on every publish | `id`, `complex_id`, `revision_number`, `content` (JSON), `from_draft_version`, `published_by`, `published_at` |
@@ -85,6 +85,7 @@ changes), and tests cover that validation. Proposed shape:
     "es": { "tagline": "…", "about": "…", "rules": ["…"], "locationNote": "…", "hours": "…" },
     "en": { "tagline": "…", "about": "…", "rules": ["…"], "locationNote": "…", "hours": "…" }
   },
+  "highlights": { "unitCount": 42, "setting": "beachfront" },  // optional facts shown under the title
   "amenities": ["pool", "beach_access", "parking"],   // keys from a fixed catalogue
   "contact": { "phone": "+18095550142", "email": "frontdesk@example.com", "whatsapp": true },
   "brandPreset": "lagoon",                            // preset key, never a free colour
@@ -324,7 +325,8 @@ settled. In M1, unfinished sections are either hidden or shown as disabled
 ## 10. Verification plan
 
 ### 10.1 Test accounts (fictional, created by a seed script)
-Two complexes, **A** and **B**, and these accounts: anonymous visitor; signed-in
+Automated tests use their own small fixtures. The shared demo dataset (`demo/dataset`, described in
+`docs/development.md`) is for development, staging and previews. Tests use two complexes, **A** and **B**, and these accounts: anonymous visitor; signed-in
 user with no role; front desk of A; complex admin of A ("Ana"); complex admin of B
 ("Ben"); platform admin; Ana again after revocation.
 
@@ -429,7 +431,7 @@ Each slice is its own branch and pull request, reviewed before the next starts.
 
 | Slice | Contents | Done when |
 | --- | --- | --- |
-| M1.1 Foundation | Workspace, Next.js app, Drizzle schema and migrations, local Supabase, CI, email-code sign-in, platform-admin bootstrap command, minimal complex and role admin screen, authorization module with its full test table | Criteria 1–3, 14 (role screens), 17, 20 pass in CI |
+| M1.1 Foundation | Workspace, Next.js app, Drizzle schema and migrations, local Supabase, CI, demo seed and reset commands loading `demo/dataset` (see `docs/development.md`), email-code sign-in, platform-admin bootstrap command, minimal complex and role admin screen, authorization module with its full test table | Criteria 1–3, 14 (role screens), 17, 20 pass in CI |
 | M1.2 Page draft and publish | Editor, save with version check, preview, publish, revisions, public page, audit events, end-to-end tests | Criteria 4–16, 18–19 pass |
 | M1.3 Photos (if approved) | Upload, processing, private drafts, public copies at publish | Criteria 22–24 pass |
 | M1.4 Staging | Staging deploy, fictional seed data, screenshots, manual checks | Criterion 21; §10.3 complete |

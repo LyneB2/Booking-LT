@@ -1,0 +1,726 @@
+{
+ "$notice": "DEMO DATA. Fictional page content in the Milestone 1 page format (docs/milestones/m1-complex-page.md §3).",
+ "pages": [
+  {
+   "complex": "cx_playa_serena",
+   "revisions": [
+    {
+     "number": 3,
+     "publishedAt": "-10d@11:05",
+     "publishedBy": "p_ana_rivas",
+     "content": {
+      "schemaVersion": 1,
+      "text": {
+       "es": {
+        "tagline": "Condominios frente al mar alrededor de una tranquila piscina con jardín, a pocos pasos del pueblo.",
+        "about": "Playa Serena tiene 42 condominios de propietarios privados en tres edificios bajos, retirados de la arena. Cada condominio lo alquila su propio anfitrión; el equipo del complejo cuida los jardines, la piscina y la recepción.\n\nLa playa está tranquila por la mañana y más animada después del almuerzo. El pueblo, el mercado de pescado y dos supermercados están a diez minutos a pie.",
+        "rules": [
+         "Horario de silencio de 10 p. m. a 8 a. m.",
+         "Todos los huéspedes se registran en recepción antes de llegar.",
+         "No se permite vidrio en el área de la piscina.",
+         "Las mascotas solo se permiten donde el anfitrión del condominio lo autorice."
+        ],
+        "locationNote": "Calle de la Playa, Las Terrenas. Las indicaciones exactas se comparten con los huéspedes confirmados.",
+        "hours": "Todos los días, 7 a. m. – 11 p. m."
+       },
+       "en": {
+        "tagline": "Beachfront condominiums around a quiet garden pool, a short walk from town.",
+        "about": "Playa Serena has 42 privately owned condos in three low buildings set back from the sand. Each condo is rented by its own host; the complex team looks after the grounds, the pool and the front desk.\n\nThe beach is calm in the morning and busier after lunch. Town, the fish market and two supermarkets are within a ten-minute walk.",
+        "rules": [
+         "Quiet hours are 10 pm to 8 am.",
+         "All guests are registered with the front desk before arrival.",
+         "No glass in the pool area.",
+         "Pets are allowed only where the condo's host permits them."
+        ],
+        "locationNote": "Calle de la Playa, Las Terrenas. Exact directions are shared with confirmed guests.",
+        "hours": "Every day, 7 am – 11 pm"
+       }
+      },
+      "highlights": {
+       "unitCount": 42,
+       "setting": "beachfront"
+      },
+      "amenities": [
+       "pool",
+       "beach_access",
+       "parking",
+       "front_desk",
+       "wifi_common",
+       "backup_power"
+      ],
+      "contact": {
+       "phone": "+18095550142",
+       "whatsapp": true,
+       "email": "frontdesk@playaserena.example"
+      },
+      "brandPreset": "lagoon",
+      "photos": [
+       {
+        "mediaId": "m_ps_01",
+        "focal": {
+         "x": 50,
+         "y": 62
+        },
+        "alt": {
+         "es": "Vista aérea de la playa, los jardines y los edificios",
+         "en": "Aerial view of the beach, the gardens and the buildings"
+        }
+       },
+       {
+        "mediaId": "m_ps_02",
+        "focal": {
+         "x": 45,
+         "y": 55
+        },
+        "alt": {
+         "es": "Piscina rodeada de jardín y palmeras",
+         "en": "Pool surrounded by lawn and palm trees"
+        }
+       },
+       {
+        "mediaId": "m_ps_03",
+        "focal": {
+         "x": 40,
+         "y": 50
+        },
+        "alt": {
+         "es": "Playa frente al complejo por la mañana",
+         "en": "Beach in front of the complex in the morning"
+        }
+       },
+       {
+        "mediaId": "m_ps_04",
+        "focal": {
+         "x": 50,
+         "y": 45
+        },
+        "alt": {
+         "es": "Edificio de condominios con balcones",
+         "en": "Condo building with balconies"
+        }
+       },
+       {
+        "mediaId": "m_ps_05",
+        "focal": {
+         "x": 50,
+         "y": 50
+        },
+        "alt": {
+         "es": "Recepción al aire libre",
+         "en": "Open-air lobby and front desk"
+        }
+       },
+       {
+        "mediaId": "m_ps_06",
+        "focal": {
+         "x": 50,
+         "y": 60
+        },
+        "alt": {
+         "es": "Sendero del jardín hacia el mar",
+         "en": "Garden path leading to the sea"
+        }
+       },
+       {
+        "mediaId": "m_ps_07",
+        "focal": {
+         "x": 50,
+         "y": 40
+        },
+        "alt": {
+         "es": "Atardecer sobre la bahía",
+         "en": "Sunset over the bay"
+        }
+       },
+       {
+        "mediaId": "m_ps_08",
+        "focal": {
+         "x": 50,
+         "y": 50
+        },
+        "alt": {
+         "es": "Entrada y estacionamiento",
+         "en": "Entrance gate and parking"
+        }
+       }
+      ],
+      "coverMediaId": "m_ps_01"
+     }
+    }
+   ],
+   "draft": {
+    "version": 14,
+    "updatedAt": "-1d@10:42",
+    "updatedBy": "p_ana_rivas",
+    "content": {
+     "schemaVersion": 1,
+     "text": {
+      "es": {
+       "tagline": "Condominios frente al mar alrededor de una tranquila piscina con jardín, a pocos pasos del pueblo.",
+       "about": "Playa Serena tiene 42 condominios de propietarios privados en tres edificios bajos, retirados de la arena. Cada condominio lo alquila su propio anfitrión; el equipo del complejo cuida los jardines, la piscina y la recepción.\n\nLa playa está tranquila por la mañana y más animada después del almuerzo.",
+       "rules": [
+        "Horario de silencio de 10 p. m. a 8 a. m.",
+        "Todos los huéspedes se registran en recepción antes de llegar.",
+        "No se permite vidrio en el área de la piscina."
+       ],
+       "locationNote": "Calle de la Playa, Las Terrenas. Las indicaciones exactas se comparten con los huéspedes confirmados.",
+       "hours": "Todos los días, 7 a. m. – 11 p. m."
+      },
+      "en": {
+       "tagline": "Beachfront condominiums around a quiet garden pool, a short walk from town.",
+       "about": "Playa Serena has 42 privately owned condos in three low buildings set back from the sand. Each condo is rented by its own host; the complex team looks after the grounds, the pool and the front desk.\n\nThe beach is calm in the morning and busier after lunch.",
+       "rules": [
+        "Quiet hours are 10 pm to 8 am.",
+        "All guests are registered with the front desk before arrival.",
+        "No glass in the pool area."
+       ],
+       "locationNote": "Calle de la Playa, Las Terrenas. Exact directions are shared with confirmed guests.",
+       "hours": "Every day, 7 am – 11 pm"
+      }
+     },
+     "highlights": {
+      "unitCount": 42,
+      "setting": "beachfront"
+     },
+     "amenities": [
+      "pool",
+      "beach_access",
+      "parking",
+      "front_desk",
+      "wifi_common",
+      "backup_power"
+     ],
+     "contact": {
+      "phone": "+18095550142",
+      "whatsapp": true,
+      "email": "frontdesk@playaserena.example"
+     },
+     "brandPreset": "lagoon",
+     "photos": [
+      {
+       "mediaId": "m_ps_01",
+       "focal": {
+        "x": 50,
+        "y": 62
+       },
+       "alt": {
+        "es": "Vista aérea de la playa, los jardines y los edificios",
+        "en": "Aerial view of the beach, the gardens and the buildings"
+       }
+      },
+      {
+       "mediaId": "m_ps_02",
+       "focal": {
+        "x": 45,
+        "y": 55
+       },
+       "alt": {
+        "es": "Piscina rodeada de jardín y palmeras",
+        "en": "Pool surrounded by lawn and palm trees"
+       }
+      },
+      {
+       "mediaId": "m_ps_03",
+       "focal": {
+        "x": 40,
+        "y": 50
+       },
+       "alt": {
+        "es": "Playa frente al complejo por la mañana",
+        "en": "Beach in front of the complex in the morning"
+       }
+      },
+      {
+       "mediaId": "m_ps_04",
+       "focal": {
+        "x": 50,
+        "y": 45
+       },
+       "alt": {
+        "es": "Edificio de condominios con balcones",
+        "en": "Condo building with balconies"
+       }
+      },
+      {
+       "mediaId": "m_ps_05",
+       "focal": {
+        "x": 50,
+        "y": 50
+       },
+       "alt": {
+        "es": "Recepción al aire libre",
+        "en": "Open-air lobby and front desk"
+       }
+      },
+      {
+       "mediaId": "m_ps_06",
+       "focal": {
+        "x": 50,
+        "y": 60
+       },
+       "alt": {
+        "es": "Sendero del jardín hacia el mar",
+        "en": "Garden path leading to the sea"
+       }
+      },
+      {
+       "mediaId": "m_ps_07",
+       "focal": {
+        "x": 50,
+        "y": 40
+       },
+       "alt": {
+        "es": "Atardecer sobre la bahía",
+        "en": "Sunset over the bay"
+       }
+      },
+      {
+       "mediaId": "m_ps_08",
+       "focal": {
+        "x": 50,
+        "y": 50
+       },
+       "alt": {
+        "es": "Entrada y estacionamiento",
+        "en": "Entrance gate and parking"
+       }
+      },
+      {
+       "mediaId": "m_ps_09",
+       "focal": {
+        "x": 50,
+        "y": 55
+       },
+       "alt": {}
+      }
+     ],
+     "coverMediaId": "m_ps_01"
+    }
+   },
+   "note": "Draft differs from published: about text shortened, one rule removed, new photo without alt text (publishing must be refused until alt text is added)."
+  },
+  {
+   "complex": "cx_bahia_almendro",
+   "revisions": [
+    {
+     "number": 1,
+     "publishedAt": "-280d@09:30",
+     "publishedBy": "p_rafael_pena",
+     "content": {
+      "schemaVersion": 1,
+      "text": {
+       "es": {
+        "tagline": "Dieciocho condominios bajo los almendros, frente a Playa Bonita.",
+        "about": "Bahía Almendro es un complejo pequeño y tranquilo de 18 condominios en dos edificios de madera oscura y piedra. Los senderos bajo los almendros llevan directo a Playa Bonita, una de las playas más amplias de Las Terrenas.\n\nHay un rincón de trabajo con buena conexión a la sombra del jardín, y la recepción ayuda con traslados, excursiones y reservas en restaurantes cercanos.",
+        "rules": [
+         "Horario de silencio de 10 p. m. a 7 a. m.",
+         "Registro de huéspedes obligatorio antes de la llegada.",
+         "La piscina abre de 7 a. m. a 9 p. m.; no hay salvavidas.",
+         "No se permite vidrio ni música alta en la piscina.",
+         "Las visitas deben anunciarse en recepción.",
+         "Un vehículo por condominio en el estacionamiento.",
+         "Prohibido fumar en áreas comunes cerradas.",
+         "Las tumbonas no se pueden reservar con toallas.",
+         "Deposite la basura clasificada en el punto de reciclaje junto a la entrada."
+        ],
+        "locationNote": "Playa Bonita, Las Terrenas. A 5 minutos en coche del centro.",
+        "hours": "Todos los días, 8 a. m. – 8 p. m."
+       },
+       "en": {
+        "tagline": "Eighteen condos under the almond trees, facing Playa Bonita.",
+        "about": "Bahía Almendro is a small, quiet complex of 18 condos in two buildings of dark wood and stone. Paths under the sea almond trees lead straight to Playa Bonita, one of the widest beaches in Las Terrenas.\n\nThere is a shaded co-working corner with a good connection in the garden, and the front desk helps with transfers, excursions and restaurant bookings nearby.",
+        "rules": [
+         "Quiet hours are 10 pm to 7 am.",
+         "Guest registration is required before arrival.",
+         "The pool is open 7 am to 9 pm; there is no lifeguard.",
+         "No glass or loud music at the pool.",
+         "Visitors must check in at the front desk.",
+         "One vehicle per condo in the car park.",
+         "No smoking in enclosed common areas.",
+         "Loungers cannot be reserved with towels.",
+         "Please sort rubbish at the recycling point by the entrance."
+        ],
+        "locationNote": "Playa Bonita, Las Terrenas. Five minutes by car from the centre.",
+        "hours": "Every day, 8 am – 8 pm"
+       }
+      },
+      "highlights": {
+       "unitCount": 18,
+       "setting": "beachfront"
+      },
+      "amenities": [
+       "pool",
+       "beach_access",
+       "beach_chairs",
+       "ocean_view",
+       "garden",
+       "parking",
+       "front_desk",
+       "security_24h",
+       "wifi_common",
+       "backup_power"
+      ],
+      "contact": {
+       "phone": "+18095550152",
+       "whatsapp": true,
+       "email": "frontdesk@bahiaalmendro.example"
+      },
+      "brandPreset": "harbour",
+      "photos": [
+       {
+        "mediaId": "m_ba_01",
+        "focal": {
+         "x": 50,
+         "y": 55
+        },
+        "alt": {
+         "es": "Piscina frente a Playa Bonita",
+         "en": "Pool facing Playa Bonita"
+        }
+       },
+       {
+        "mediaId": "m_ba_02",
+        "focal": {
+         "x": 50,
+         "y": 50
+        },
+        "alt": {
+         "es": "Sendero de piedra bajo almendros",
+         "en": "Stone path under almond trees"
+        }
+       },
+       {
+        "mediaId": "m_ba_03",
+        "focal": {
+         "x": 55,
+         "y": 50
+        },
+        "alt": {
+         "es": "Terraza con vista al mar",
+         "en": "Terrace with an ocean view"
+        }
+       },
+       {
+        "mediaId": "m_ba_04",
+        "focal": {
+         "x": 50,
+         "y": 45
+        },
+        "alt": {
+         "es": "Playa al amanecer",
+         "en": "Beach at sunrise"
+        }
+       },
+       {
+        "mediaId": "m_ba_05",
+        "focal": {
+         "x": 50,
+         "y": 50
+        },
+        "alt": {
+         "es": "Rincón de trabajo a la sombra",
+         "en": "Shaded co-working corner"
+        }
+       }
+      ],
+      "coverMediaId": "m_ba_01"
+     }
+    }
+   ],
+   "draft": {
+    "version": 6,
+    "updatedAt": "-280d@09:28",
+    "updatedBy": "p_rafael_pena",
+    "content": "sameAsLatestRevision"
+   }
+  },
+  {
+   "complex": "cx_patio_las_garzas",
+   "revisions": [
+    {
+     "number": 1,
+     "publishedAt": "-170d@16:00",
+     "publishedBy": "p_claire_dumont",
+     "content": {
+      "schemaVersion": 1,
+      "text": {
+       "es": {
+        "tagline": "Doce apartamentos alrededor de un patio con sombra, en pleno pueblo.",
+        "about": "Patio Las Garzas es un pequeño conjunto de 12 apartamentos de dos niveles alrededor de un patio con un viejo árbol de mango. Está a cinco minutos a pie del Pueblo de los Pescadores y a diez de la playa.\n\nNo hay recepción: la asociación de propietarios atiende por WhatsApp en horario de oficina, y cada anfitrión recibe a sus huéspedes.",
+        "rules": [
+         "Silencio a partir de las 10 p. m.",
+         "Las bicicletas se guardan en el patio, no en las escaleras.",
+         "El tendedero común se libera antes de las 6 p. m."
+        ],
+        "locationNote": "Calle Duarte, Las Terrenas, cerca del Pueblo de los Pescadores.",
+        "hours": "Lunes a sábado, 9 a. m. – 5 p. m. (oficina de propietarios)"
+       }
+      },
+      "highlights": {
+       "unitCount": 12,
+       "setting": "town"
+      },
+      "amenities": [
+       "garden",
+       "laundry",
+       "wifi_common"
+      ],
+      "contact": {
+       "phone": "+18295550161",
+       "whatsapp": true,
+       "email": null
+      },
+      "brandPreset": "clay",
+      "photos": [
+       {
+        "mediaId": "m_plg_01",
+        "focal": {
+         "x": 50,
+         "y": 60
+        },
+        "alt": {
+         "es": "Patio interior con árbol de mango y hamacas",
+         "en": "Courtyard with a mango tree and hammocks"
+        }
+       }
+      ],
+      "coverMediaId": "m_plg_01"
+     }
+    }
+   ],
+   "draft": {
+    "version": 3,
+    "updatedAt": "-170d@15:58",
+    "updatedBy": "p_claire_dumont",
+    "content": "sameAsLatestRevision"
+   },
+   "note": "Spanish only; English visitors see Spanish (fallback behaviour depends on the open language question)."
+  },
+  {
+   "complex": "cx_mirador_atlantico",
+   "revisions": [],
+   "draft": {
+    "version": 2,
+    "updatedAt": "-3d@18:20",
+    "updatedBy": "p_ana_rivas",
+    "content": {
+     "schemaVersion": 1,
+     "text": {
+      "es": {
+       "tagline": "Condominios en la colina con vista al Atlántico.",
+       "about": "",
+       "rules": [],
+       "locationNote": "",
+       "hours": ""
+      }
+     },
+     "highlights": {
+      "unitCount": null,
+      "setting": "hillside"
+     },
+     "amenities": [
+      "ocean_view",
+      "pool"
+     ],
+     "contact": {
+      "phone": null,
+      "whatsapp": false,
+      "email": null
+     },
+     "brandPreset": "dusk",
+     "photos": [],
+     "coverMediaId": null
+    }
+   },
+   "note": "Never published. Incomplete draft: publishing must be refused; public URL returns not found."
+  },
+  {
+   "complex": "cx_costa_ambar",
+   "revisions": [
+    {
+     "number": 2,
+     "publishedAt": "-40d@12:00",
+     "publishedBy": "p_marco_bellini",
+     "content": {
+      "schemaVersion": 1,
+      "text": {
+       "es": {
+        "tagline": "Suites modernas a una cuadra de la playa del kitesurf.",
+        "about": "Costa Ámbar Suites está a una cuadra de la playa principal de Cabarete: lo bastante cerca para ver las cometas desde la azotea y lo bastante lejos para dormir bien. El complejo tiene 24 suites en un edificio moderno de tres niveles; cada una es de un propietario privado y la alquila su propio anfitrión. La azotea compartida tiene una piscina pequeña, tumbonas a la sombra y la mejor vista del atardecer de la calle.\n\nCabarete es la capital del kitesurf de la costa norte. De diciembre a abril los alisios suben hacia el mediodía y la bahía se llena de color; las mañanas son tranquilas para remar o nadar. Hay varias escuelas para principiantes a cinco minutos a pie, y el complejo tiene un depósito cerrado para tablas y cometas con ducha de enjuague.\n\nLa calle es animada por la noche, con bares y restaurantes sobre la arena. Las suites que dan al jardín son las más silenciosas; si tiene el sueño ligero, pregunte a su anfitrión de qué lado estará. Supermercado, farmacia y cajero están en la carretera principal, a tres minutos.\n\nEl aeropuerto de Puerto Plata está a unos 25 minutos en coche. Santiago queda a unos 90 minutos y Las Terrenas a unas cuatro horas por carretera. La recepción puede coordinar traslados con choferes autorizados; comparta los datos de su vuelo con su anfitrión al menos dos días antes de llegar.",
+        "rules": [
+         "Horario de silencio de 11 p. m. a 8 a. m.",
+         "Enjuague las tablas solo en la estación de lavado.",
+         "La azotea cierra a las 10 p. m."
+        ],
+        "locationNote": "Calle Principal, Cabarete, Puerto Plata.",
+        "hours": "Todos los días, 8 a. m. – 10 p. m."
+       },
+       "en": {
+        "tagline": "Modern suites one block from the kitesurfing beach.",
+        "about": "Costa Ámbar Suites sits a block back from Cabarete's main beach, close enough to watch the kites from the rooftop and far enough to sleep well. The complex has 24 suites in one modern three-storey building, each owned privately and rented by its own host. The shared rooftop has a plunge pool, shaded loungers and the best sunset view on the street.\n\nCabarete is the north coast's kitesurfing capital. From December to April the trade winds pick up around midday and the bay fills with colour; mornings are calm enough for paddleboarding and swimming. Beginners can book lessons with several schools within a five-minute walk, and the complex has a locked board and kite store with a rinse station.\n\nThe street outside is lively in the evening, with beach bars and restaurants along the sand. Suites facing the garden are the quietest; ask your host which side you are on if you are a light sleeper. A supermarket, pharmacy and cash machine are on the main road, three minutes away.\n\nPuerto Plata airport is about 25 minutes by car. Santiago is about 90 minutes, and Las Terrenas is roughly four hours by road. The front desk can arrange transfers with licensed drivers; please share your flight details with your host at least two days before arrival.",
+        "rules": [
+         "Quiet hours are 11 pm to 8 am.",
+         "Rinse boards only at the wash station.",
+         "The rooftop closes at 10 pm."
+        ],
+        "locationNote": "Calle Principal, Cabarete, Puerto Plata.",
+        "hours": "Every day, 8 am – 10 pm"
+       }
+      },
+      "highlights": {
+       "unitCount": 24,
+       "setting": "beach_walk"
+      },
+      "amenities": [
+       "pool",
+       "ocean_view",
+       "front_desk",
+       "security_24h",
+       "wifi_common",
+       "elevator",
+       "laundry",
+       "accessible_entrance"
+      ],
+      "contact": {
+       "phone": "+18095550171",
+       "whatsapp": true,
+       "email": "hello@costaambar.example"
+      },
+      "brandPreset": "palm",
+      "photos": [
+       {
+        "mediaId": "m_ca_01",
+        "focal": {
+         "x": 50,
+         "y": 40
+        },
+        "alt": {
+         "es": "Playa con cometas de kitesurf",
+         "en": "Beach with kitesurfing kites"
+        }
+       },
+       {
+        "mediaId": "m_ca_02",
+        "focal": {
+         "x": 50,
+         "y": 55
+        },
+        "alt": {
+         "es": "Terraza en la azotea con piscina",
+         "en": "Rooftop terrace with a plunge pool"
+        }
+       },
+       {
+        "mediaId": "m_ca_03",
+        "focal": {
+         "x": 50,
+         "y": 45
+        },
+        "alt": {
+         "es": "Edificio de suites",
+         "en": "Suite building"
+        }
+       },
+       {
+        "mediaId": "m_ca_04",
+        "focal": {
+         "x": 50,
+         "y": 50
+        },
+        "alt": {
+         "es": "Depósito para tablas",
+         "en": "Board storage room"
+        }
+       },
+       {
+        "mediaId": "m_ca_05",
+        "focal": {
+         "x": 50,
+         "y": 55
+        },
+        "alt": {
+         "es": "Calle de bares junto a la playa",
+         "en": "Beach-bar street nearby"
+        }
+       },
+       {
+        "mediaId": "m_ca_06",
+        "focal": {
+         "x": 50,
+         "y": 50
+        },
+        "alt": {
+         "es": "Jardín iluminado de noche",
+         "en": "Garden lit at night"
+        }
+       }
+      ],
+      "coverMediaId": "m_ca_01"
+     }
+    }
+   ],
+   "draft": {
+    "version": 9,
+    "updatedAt": "-40d@11:57",
+    "updatedBy": "p_marco_bellini",
+    "content": "sameAsLatestRevision"
+   }
+  },
+  {
+   "complex": "cx_altos_coson",
+   "revisions": [
+    {
+     "number": 1,
+     "publishedAt": "-560d@10:00",
+     "publishedBy": "p_rafael_pena",
+     "content": {
+      "schemaVersion": 1,
+      "text": {
+       "es": {
+        "tagline": "Apartamentos en la colina de Cosón.",
+        "about": "Complejo piloto que ya no forma parte de Booking LT.",
+        "rules": [],
+        "locationNote": "Cosón, Las Terrenas.",
+        "hours": ""
+       }
+      },
+      "highlights": {
+       "unitCount": 10,
+       "setting": "hillside"
+      },
+      "amenities": [
+       "ocean_view"
+      ],
+      "contact": {
+       "phone": null,
+       "whatsapp": false,
+       "email": "info@altosdecoson.example"
+      },
+      "brandPreset": "palm",
+      "photos": [
+       {
+        "mediaId": "m_ac_01",
+        "focal": {
+         "x": 50,
+         "y": 50
+        },
+        "alt": {
+         "es": "Vista desde la colina",
+         "en": "Hillside view"
+        }
+       }
+      ],
+      "coverMediaId": "m_ac_01"
+     }
+    }
+   ],
+   "draft": {
+    "version": 1,
+    "updatedAt": "-560d@09:59",
+    "updatedBy": "p_rafael_pena",
+    "content": "sameAsLatestRevision"
+   },
+   "note": "Complex is archived: public URL returns not found."
+  }
+ ]
+}

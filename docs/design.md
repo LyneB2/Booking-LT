@@ -156,7 +156,57 @@ Use a 4 px base scale: **4, 8, 12, 16, 20, 24, 32, 40, 48, 64**.
 - Performance: the first photo loads immediately; the others load as needed. The
   server provides sized versions so phones do not download desktop images.
 
-## 8. Status of these rules
+## 8. Demo content and imagery
+
+Previews, development and staging use **realistic, consistent fictional content by
+default**, so every screen can be experienced as if it were populated. The content
+comes from the shared demo dataset; [development.md](development.md) §2 describes
+it and how it is reset.
+
+### 8.1 Text and people
+- Use the dataset's cast and complexes, such as Ana Rivas at Playa Serena Residences
+  or Rafael Peña at Bahía Almendro, rather than inventing new names for each screen.
+  The same person, property and booking must read identically in every account's view.
+- Use realistic lengths, both languages where the product supports them, and real
+  formats for dates, prices and phone numbers. Never use lorem ipsum.
+- Every screen design shows its edge cases alongside the ordinary case: empty states,
+  long names, missing photos, incomplete information, cancellations.
+
+### 8.2 Photos
+- **AI-generated images are welcome for demo content.** Each demo photo in
+  `demo/dataset/media.json` has a ready-to-use prompt. Until an image is generated,
+  a drawn placeholder carries a visible "DEMO PHOTO · PLACEHOLDER" band.
+- Style, so the platform stays believable:
+  - photorealistic, natural daylight or golden hour;
+  - Dominican Republic north-coast settings: palm-lined beaches, turquoise bays,
+    green hills;
+  - low-rise condominium complexes of three to five storeys, with white or pastel
+    walls, tiled or dark roofs, gardens and pools, rather than mega-resorts or towers;
+  - local towns with colourful, modest buildings.
+- Each complex keeps a consistent look across its photos, matching its identity in
+  `complexes.json`. For example, Bahía Almendro has dark wood and stone, and Patio
+  Las Garzas has coral and turquoise walls.
+- Never show:
+  - recognisable real complexes, signs, brands or logos;
+  - text or watermarks;
+  - identifiable faces, licence plates or house numbers.
+- Size: 3 : 2, at least 2,400 px on the long side; WebP or JPEG; no location metadata.
+- Record each image's `source` (`placeholder`, `ai-generated` with the tool name, or
+  `licensed` with the licence).
+- Real photographs of real places or people go into demo data only with written
+  permission, recorded in `media.json`.
+  - **Exception:** the design preview currently uses an aerial photo supplied by the
+    product owner, plus crops of it, for internal review only. It is not part of the
+    demo dataset and must not reach staging or production without the owner's rights.
+
+### 8.3 Labelling
+- Development and staging show a permanent "Demo environment — fictional data"
+  banner. Design previews say at the top that their content is fictional.
+- Features that are only planned or simulated are labelled "Coming later",
+  "Design preview" or "Simulated" wherever they appear. They never look like
+  working features.
+
+## 9. Status of these rules
 
 | Rule | Status |
 | --- | --- |
@@ -166,9 +216,10 @@ Use a 4 px base scale: **4, 8, 12, 16, 20, 24, 32, 40, 48, 64**.
 | "Show all photos" and the full-screen gallery | **Designed only** — the preview button does nothing |
 | Focal-point cropping | **Shown** with fixed values; editor control not designed; not built |
 | Editor, preview-and-publish, arrivals screens | **Not yet updated** to these rules; waits for approval of revision 2 |
+| Demo dataset and placeholder photos | **Exists** in `demo/`; checked by `node demo/tools/validate.mjs`. AI images not generated yet |
 | Application code | **Not started** |
 
-## 9. Changing these rules
+## 10. Changing these rules
 
 Propose changes in a pull request that updates this file and the preview together,
 with desktop and phone screenshots. Keep product requirements in `product.md` and

@@ -1,0 +1,83 @@
+{
+  "$notice": "DEMO DATA. Fictional complexes. Places are real towns and beaches in the Dominican Republic; the complexes, buildings and contacts are invented.",
+  "complexes": [
+    {
+      "key": "cx_playa_serena",
+      "slug": "playa-serena",
+      "name": "Playa Serena Residences",
+      "locality": "Las Terrenas",
+      "region": "Samaná",
+      "countryCode": "DO",
+      "status": "active",
+      "createdAt": "-420d",
+      "createdBy": "p_lucia_fernandez",
+      "identity": "Established beachfront complex: three low white buildings, lawns and palms, calm and family-friendly. Busiest demo complex.",
+      "edgeCases": ["published page with newer unpublished draft", "draft photo missing alt text blocks publishing", "two complex admins over time (one revoked)", "front-desk account"]
+    },
+    {
+      "key": "cx_bahia_almendro",
+      "slug": "bahia-almendro",
+      "name": "Bahía Almendro Condominiums",
+      "locality": "Las Terrenas",
+      "region": "Samaná",
+      "countryCode": "DO",
+      "status": "active",
+      "createdAt": "-300d",
+      "createdBy": "p_lucia_fernandez",
+      "identity": "Boutique complex of 18 condos facing Playa Bonita: dark wood, stone paths, quieter and more upmarket. Popular with couples and remote workers.",
+      "edgeCases": ["long rules list (9 rules)", "both languages complete"]
+    },
+    {
+      "key": "cx_patio_las_garzas",
+      "slug": "patio-las-garzas",
+      "name": "Patio Las Garzas",
+      "locality": "Las Terrenas",
+      "region": "Samaná",
+      "countryCode": "DO",
+      "status": "active",
+      "createdAt": "-180d",
+      "createdBy": "p_lucia_fernandez",
+      "identity": "Small, colourful town complex: 12 apartments around a shaded courtyard, five minutes' walk from the fishermen's village. Budget-friendly, no front desk.",
+      "edgeCases": ["only one photo", "Spanish text only (English missing)", "no front desk: office hours instead", "admin is also a future host"]
+    },
+    {
+      "key": "cx_mirador_atlantico",
+      "slug": "mirador-del-atlantico",
+      "name": "Residencial Mirador del Atlántico Beach & Garden Condominiums",
+      "locality": "Las Terrenas",
+      "region": "Samaná",
+      "countryCode": "DO",
+      "status": "active",
+      "createdAt": "-15d",
+      "createdBy": "p_lucia_fernandez",
+      "identity": "New hillside complex still preparing its page. Same administrator as Playa Serena.",
+      "edgeCases": ["long complex name (58 characters)", "never published: public page returns not found", "incomplete draft", "no photos", "admin manages two complexes"]
+    },
+    {
+      "key": "cx_costa_ambar",
+      "slug": "costa-ambar",
+      "name": "Costa Ámbar Suites",
+      "locality": "Cabarete",
+      "region": "Puerto Plata",
+      "countryCode": "DO",
+      "status": "active",
+      "createdAt": "-90d",
+      "createdBy": "p_lucia_fernandez",
+      "identity": "Kitesurf-town complex on the north coast: modern suites, rooftop terrace, lively beach. Shows expansion beyond Samaná.",
+      "edgeCases": ["about text close to the 2,000-character limit", "different region"]
+    },
+    {
+      "key": "cx_altos_coson",
+      "slug": "altos-de-coson",
+      "name": "Altos de Cosón",
+      "locality": "Las Terrenas",
+      "region": "Samaná",
+      "countryCode": "DO",
+      "status": "archived",
+      "createdAt": "-600d",
+      "createdBy": "p_lucia_fernandez",
+      "identity": "Former pilot complex that left the platform.",
+      "edgeCases": ["archived: public page returns not found even though a revision exists", "no active administrators"]
+    }
+  ]
+}

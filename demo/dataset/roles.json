@@ -1,0 +1,15 @@
+{
+  "$notice": "DEMO DATA. Role assignments for the roles that exist in Milestone 1. Host, cohost, guest, cleaner and maintenance relationships arrive with their modules.",
+  "roleAssignments": [
+    { "key": "ra_lucia_platform", "person": "p_lucia_fernandez", "role": "platform_admin", "complex": null, "grantedBy": null, "grantedAt": "-430d", "note": "Bootstrap platform admin" },
+    { "key": "ra_ana_ps", "person": "p_ana_rivas", "role": "complex_admin", "complex": "cx_playa_serena", "grantedBy": "p_lucia_fernandez", "grantedAt": "-300d" },
+    { "key": "ra_ana_mirador", "person": "p_ana_rivas", "role": "complex_admin", "complex": "cx_mirador_atlantico", "grantedBy": "p_lucia_fernandez", "grantedAt": "-15d" },
+    { "key": "ra_yokasta_ps", "person": "p_yokasta_mejia", "role": "front_desk", "complex": "cx_playa_serena", "grantedBy": "p_lucia_fernandez", "grantedAt": "-200d" },
+    { "key": "ra_hector_ps", "person": "p_hector_batista", "role": "complex_admin", "complex": "cx_playa_serena", "grantedBy": "p_lucia_fernandez", "grantedAt": "-500d", "revokedBy": "p_lucia_fernandez", "revokedAt": "-20d", "note": "Revoked: left the job" },
+    { "key": "ra_rafael_ba", "person": "p_rafael_pena", "role": "complex_admin", "complex": "cx_bahia_almendro", "grantedBy": "p_lucia_fernandez", "grantedAt": "-300d" },
+    { "key": "ra_wander_ba", "person": "p_wander_rosario", "role": "front_desk", "complex": "cx_bahia_almendro", "grantedBy": "p_lucia_fernandez", "grantedAt": "-250d" },
+    { "key": "ra_claire_plg", "person": "p_claire_dumont", "role": "complex_admin", "complex": "cx_patio_las_garzas", "grantedBy": "p_lucia_fernandez", "grantedAt": "-180d" },
+    { "key": "ra_marco_ca", "person": "p_marco_bellini", "role": "complex_admin", "complex": "cx_costa_ambar", "grantedBy": "p_lucia_fernandez", "grantedAt": "-90d" },
+    { "key": "ra_rafael_altos", "person": "p_rafael_pena", "role": "complex_admin", "complex": "cx_altos_coson", "grantedBy": "p_lucia_fernandez", "grantedAt": "-590d", "revokedBy": "p_lucia_fernandez", "revokedAt": "-60d", "note": "Revoked when the complex was archived" }
+  ]
+}

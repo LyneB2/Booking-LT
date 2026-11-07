@@ -205,6 +205,7 @@ frontend, backend and database. Order may change after review.
 | --- | --- |
 | Product and engineering documentation | Draft (this PR) |
 | Milestone 1 plan and design previews ([docs/milestones/m1-complex-page.md](milestones/m1-complex-page.md)) | **Proposed; awaiting approval.** Previews are static mock-ups with fictional content |
+| Demo dataset (`demo/`, see [development.md](development.md)) | **Exists:** fictional complexes, people, roles, page content and labelled placeholder photos; validated by script. Not loaded anywhere yet (no database) |
 | Application code, database | **Not started** |
 | Pagadito integration | **External testing underway; not verified; not in this repository** |
 
