@@ -174,8 +174,18 @@ it and how it is reset.
 
 ### 8.2 Photos
 - **AI-generated images are welcome for demo content.** Each demo photo in
-  `demo/dataset/media.json` has a ready-to-use prompt. Until an image is generated,
-  a drawn placeholder carries a visible "DEMO PHOTO · PLACEHOLDER" band.
+  `demo/dataset/media.json` has a ready-to-use prompt for replacing its placeholder.
+- **Current placeholders are crops** of one aerial photo supplied by the product
+  owner. Each crop is mirrored or tinted per complex and carries a small "DEMO" tag
+  in its bottom-left corner.
+  - The subject, alt text and prompt of each photo describe what the crop actually
+    shows.
+  - The photo's rights are unconfirmed, so crop placeholders are for **development and
+    internal previews only**. They are never uploaded to staging or production.
+  - Every complex shows the same place, and small crops look soft at large sizes.
+    Both are acceptable for placeholders.
+  - If the source photo is missing, drawn scenes are used instead. Those carry a
+    "DEMO PHOTO · PLACEHOLDER" band.
 - Style, so the platform stays believable:
   - photorealistic, natural daylight or golden hour;
   - Dominican Republic north-coast settings: palm-lined beaches, turquoise bays,
@@ -191,13 +201,14 @@ it and how it is reset.
   - text or watermarks;
   - identifiable faces, licence plates or house numbers.
 - Size: 3 : 2, at least 2,400 px on the long side; WebP or JPEG; no location metadata.
-- Record each image's `source` (`placeholder`, `ai-generated` with the tool name, or
-  `licensed` with the licence).
+- Record each image's `source`: `crop-placeholder`, `placeholder` (drawn),
+  `ai-generated` with the tool name, or `licensed` with the licence.
 - Real photographs of real places or people go into demo data only with written
   permission, recorded in `media.json`.
-  - **Exception:** the design preview currently uses an aerial photo supplied by the
-    product owner, plus crops of it, for internal review only. It is not part of the
-    demo dataset and must not reach staging or production without the owner's rights.
+  - **Exception:** the product owner's aerial photo, described above, is used in the
+    design preview and as the source of the crop placeholders. It is for development
+    and internal review only, and must not reach staging or production until its
+    rights are confirmed.
 
 ### 8.3 Labelling
 - Development and staging show a permanent "Demo environment — fictional data"
@@ -216,7 +227,7 @@ it and how it is reset.
 | "Show all photos" and the full-screen gallery | **Designed only** — the preview button does nothing |
 | Focal-point cropping | **Shown** with fixed values; editor control not designed; not built |
 | Editor, preview-and-publish, arrivals screens | **Not yet updated** to these rules; waits for approval of revision 2 |
-| Demo dataset and placeholder photos | **Exists** in `demo/`; checked by `node demo/tools/validate.mjs`. AI images not generated yet |
+| Demo dataset and placeholder photos | **Exists** in `demo/`; checked by `node demo/tools/validate.mjs`. Photos are crop placeholders (development and internal previews only); AI images not generated yet |
 | Application code | **Not started** |
 
 ## 10. Changing these rules

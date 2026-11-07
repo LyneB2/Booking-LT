@@ -106,8 +106,8 @@
          "y": 50
         },
         "alt": {
-         "es": "Recepción al aire libre",
-         "en": "Open-air lobby and front desk"
+         "es": "Techo de la casa club y el jardín",
+         "en": "Clubhouse roof and lawn"
         }
        },
        {
@@ -117,8 +117,8 @@
          "y": 60
         },
         "alt": {
-         "es": "Sendero del jardín hacia el mar",
-         "en": "Garden path leading to the sea"
+         "es": "Sendero por el jardín",
+         "en": "Garden path through the lawn"
         }
        },
        {
@@ -128,8 +128,8 @@
          "y": 40
         },
         "alt": {
-         "es": "Atardecer sobre la bahía",
-         "en": "Sunset over the bay"
+         "es": "La bahía al atardecer",
+         "en": "The bay at dusk"
         }
        },
        {
@@ -248,8 +248,8 @@
         "y": 50
        },
        "alt": {
-        "es": "Recepción al aire libre",
-        "en": "Open-air lobby and front desk"
+        "es": "Techo de la casa club y el jardín",
+        "en": "Clubhouse roof and lawn"
        }
       },
       {
@@ -259,8 +259,8 @@
         "y": 60
        },
        "alt": {
-        "es": "Sendero del jardín hacia el mar",
-        "en": "Garden path leading to the sea"
+        "es": "Sendero por el jardín",
+        "en": "Garden path through the lawn"
        }
       },
       {
@@ -270,8 +270,8 @@
         "y": 40
        },
        "alt": {
-        "es": "Atardecer sobre la bahía",
-        "en": "Sunset over the bay"
+        "es": "La bahía al atardecer",
+        "en": "The bay at dusk"
        }
       },
       {
@@ -385,8 +385,8 @@
          "y": 50
         },
         "alt": {
-         "es": "Sendero de piedra bajo almendros",
-         "en": "Stone path under almond trees"
+         "es": "Sendero del jardín entre palmeras",
+         "en": "Garden path between palm trees"
         }
        },
        {
@@ -396,8 +396,8 @@
          "y": 50
         },
         "alt": {
-         "es": "Terraza con vista al mar",
-         "en": "Terrace with an ocean view"
+         "es": "Vista al mar entre palmeras",
+         "en": "Ocean view through the palms"
         }
        },
        {
@@ -407,8 +407,8 @@
          "y": 45
         },
         "alt": {
-         "es": "Playa al amanecer",
-         "en": "Beach at sunrise"
+         "es": "Cala con pequeñas islas",
+         "en": "Cove with small islands"
         }
        },
        {
@@ -418,8 +418,8 @@
          "y": 50
         },
         "alt": {
-         "es": "Rincón de trabajo a la sombra",
-         "en": "Shaded co-working corner"
+         "es": "Colinas verdes detrás del complejo",
+         "en": "Green hills behind the complex"
         }
        }
       ],
@@ -479,7 +479,7 @@
          "y": 60
         },
         "alt": {
-         "es": "Patio interior con árbol de mango y hamacas",
+         "es": "Casas vecinas con techos rojos y jardín",
          "en": "Courtyard with a mango tree and hammocks"
         }
        }
@@ -595,8 +595,8 @@
          "y": 40
         },
         "alt": {
-         "es": "Playa con cometas de kitesurf",
-         "en": "Beach with kitesurfing kites"
+         "es": "La bahía y la playa",
+         "en": "The bay and the beach"
         }
        },
        {
@@ -606,8 +606,8 @@
          "y": 55
         },
         "alt": {
-         "es": "Terraza en la azotea con piscina",
-         "en": "Rooftop terrace with a plunge pool"
+         "es": "Área de piscina",
+         "en": "Pool deck"
         }
        },
        {
@@ -628,8 +628,8 @@
          "y": 50
         },
         "alt": {
-         "es": "Depósito para tablas",
-         "en": "Board storage room"
+         "es": "Entrada del edificio de suites",
+         "en": "Suite building entrance"
         }
        },
        {
@@ -639,8 +639,8 @@
          "y": 55
         },
         "alt": {
-         "es": "Calle de bares junto a la playa",
-         "en": "Beach-bar street nearby"
+         "es": "Calle y estacionamiento",
+         "en": "Road and parking"
         }
        },
        {
@@ -650,8 +650,8 @@
          "y": 50
         },
         "alt": {
-         "es": "Jardín iluminado de noche",
-         "en": "Garden lit at night"
+         "es": "Jardín al atardecer",
+         "en": "Garden at dusk"
         }
        }
       ],

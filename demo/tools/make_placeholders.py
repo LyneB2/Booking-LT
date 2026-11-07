@@ -1,16 +1,24 @@
-"""Draw labelled placeholder photos for the demo dataset.
+"""Make labelled placeholder photos for the demo dataset.
 
 Usage (from the repository root):  python3 demo/tools/make_placeholders.py
 Reads demo/dataset/media.json and writes one WebP per entry whose source is
-"placeholder". Output is deterministic. Requires Pillow.
-Replace a placeholder with an AI-generated image by saving it at the same path
-and setting its "source" to "ai-generated" in media.json; this script then skips it.
+"crop-placeholder" (a crop of the manifest's placeholderSource photo, with a small
+DEMO tag) or "placeholder" (a drawn scene). If the source photo is missing, crop
+entries fall back to drawn scenes. Output is deterministic. Requires Pillow.
+Entries marked "ai-generated" or "licensed" are real replacements and are skipped.
 """
 import json, hashlib, pathlib, sys
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageEnhance, ImageFont, ImageOps
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 W, H = 1600, 1067
+MAX_SIDE = 1600
+GRADES = {  # per-channel multipliers, brightness, saturation
+    "none": ((1, 1, 1), 1.0, 1.0),
+    "warm": ((1.06, 1.0, 0.92), 1.0, 1.06),
+    "cool": ((0.94, 1.0, 1.06), 1.0, 0.96),
+    "dusk": ((1.12, 0.88, 0.78), 0.78, 0.9),
+}
 PALETTES = {  # sky top, sky bottom, sea, sand/ground
     "beach": ((126, 194, 212), (214, 236, 238), (31, 132, 146), (226, 205, 160)),
     "pool": ((150, 205, 214), (225, 240, 236), (64, 190, 205), (120, 170, 110)),
@@ -37,6 +45,35 @@ def font(size, weight="Medium"):
             pass
     return ImageFont.load_default()
 
+def demo_tag(img):
+    """Small, unobtrusive DEMO label in the bottom-left corner."""
+    d = ImageDraw.Draw(img, "RGBA")
+    size = max(11, round(img.width * 0.026))
+    f = font(size, "SemiBold")
+    pad, margin = round(size * 0.45), round(size * 0.7)
+    l, t, r, b = d.textbbox((0, 0), "DEMO", font=f)
+    box = [margin, img.height - margin - (b - t) - 2 * pad, margin + (r - l) + 2 * pad, img.height - margin]
+    d.rounded_rectangle(box, radius=pad, fill=(0, 0, 0, 150))
+    d.text((box[0] + pad - l, box[1] + pad - t), "DEMO", font=f, fill=(255, 255, 255, 235))
+
+def crop(entry, src, out):
+    c = entry["crop"]
+    box = tuple(round(v) for v in (src.width * c["x"] / 100, src.height * c["y"] / 100,
+                                   src.width * (c["x"] + c["w"]) / 100, src.height * (c["y"] + c["h"]) / 100))
+    img = src.crop(box)
+    if entry.get("flip"):
+        img = ImageOps.mirror(img)
+    mult, bright, sat = GRADES[entry.get("grade", "none")]
+    if mult != (1, 1, 1):
+        img = Image.merge("RGB", [ch.point(lambda v, k=k: min(255, round(v * k))) for ch, k in zip(img.split(), mult)])
+    img = ImageEnhance.Brightness(img).enhance(bright)
+    img = ImageEnhance.Color(img).enhance(sat)
+    if max(img.size) > MAX_SIDE:  # never upscale; only shrink very large crops
+        img.thumbnail((MAX_SIDE, MAX_SIDE), Image.LANCZOS)
+    demo_tag(img)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    img.save(out, "WEBP", quality=82, method=6)  # Pillow writes no EXIF/GPS unless asked
+
 def draw(entry, out):
     top, bottom, sea, ground = PALETTES[kind(entry["subject"])]
     img = Image.new("RGB", (W, H))
@@ -62,14 +99,20 @@ def draw(entry, out):
     img.save(out, "WEBP", quality=72, method=6)
 
 def main():
+    manifest = json.loads((ROOT / "demo/dataset/manifest.json").read_text(encoding="utf-8"))
     media = json.loads((ROOT / "demo/dataset/media.json").read_text(encoding="utf-8"))["media"]
-    made = 0
+    src_info = manifest.get("placeholderSource") or {}
+    src_path = ROOT / src_info.get("path", "")
+    src = Image.open(src_path).convert("RGB") if src_info and src_path.is_file() else None
+    cropped = drawn = 0
     for m in media:
-        if m["source"] != "placeholder":
-            continue
-        draw(m, ROOT / m["file"])
-        made += 1
-    print(f"wrote {made} placeholder images")
+        if m["source"] == "crop-placeholder" and src is not None:
+            crop(m, src, ROOT / m["file"]); cropped += 1
+        elif m["source"] in ("crop-placeholder", "placeholder"):
+            draw(m, ROOT / m["file"]); drawn += 1
+    if drawn and any(m["source"] == "crop-placeholder" for m in media) and src is None:
+        print(f"note: source photo not found at {src_info.get('path')}; drew scenes instead")
+    print(f"wrote {cropped} cropped and {drawn} drawn placeholder images")
 
 if __name__ == "__main__":
     sys.exit(main())

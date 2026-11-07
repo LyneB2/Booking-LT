@@ -12,8 +12,29 @@
     "media": "media.json"
   },
   "coverage": {
-    "seededWhenBuilt": ["complexes", "people (accounts)", "roles: platform_admin, complex_admin, front_desk", "complex pages: drafts and published revisions", "complex page photos"],
-    "plannedOnly": ["host/cohost/guest relationships (people.json 'plannedRelationships' is narrative only)", "properties and listings", "reservations and guest rosters", "announcements", "messages", "cleaning and maintenance tasks"],
+    "seededWhenBuilt": [
+      "complexes",
+      "people (accounts)",
+      "roles: platform_admin, complex_admin, front_desk",
+      "complex pages: drafts and published revisions",
+      "complex page photos"
+    ],
+    "plannedOnly": [
+      "host/cohost/guest relationships (people.json 'plannedRelationships' is narrative only)",
+      "properties and listings",
+      "reservations and guest rosters",
+      "announcements",
+      "messages",
+      "cleaning and maintenance tasks"
+    ],
     "rule": "Add structured data for a module only when that module is designed or implemented."
+  },
+  "placeholderSource": {
+    "path": "design/previews/assets/complex-cover.webp",
+    "width": 1120,
+    "height": 730,
+    "origin": "Aerial photo supplied by the product owner on 2026-11-05. Carries a faint third-party watermark.",
+    "rightsConfirmed": false,
+    "allowedUse": "Development and internal design previews only. Must not be uploaded to staging or production until rights are confirmed or every crop is replaced."
   }
 }

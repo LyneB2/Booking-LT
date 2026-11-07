@@ -43,10 +43,10 @@ Location: `demo/`
 | `demo/dataset/people.json` | 18 people: staff, future hosts, cohost, cleaner, maintenance, guests |
 | `demo/dataset/roles.json` | Role assignments for the roles that exist in Milestone 1 |
 | `demo/dataset/pages.json` | Complex page drafts and published revisions, in the Milestone 1 page format |
-| `demo/dataset/media.json` | Photos: file path, subject, AI prompt, and source (`placeholder`, `ai-generated` or `licensed`) |
-| `demo/media/<complex>/` | Photo files (currently labelled placeholders) |
+| `demo/dataset/media.json` | Photos: file path, subject, crop settings, AI prompt, and source (`crop-placeholder`, `placeholder`, `ai-generated` or `licensed`) |
+| `demo/media/<complex>/` | Photo files: currently crops of the product owner's aerial photo, tagged "DEMO". The source and its usage limits are recorded in `manifest.json` → `placeholderSource` |
 | `demo/tools/validate.mjs` | Consistency checks (see §3) |
-| `demo/tools/make_placeholders.py` | Draws the labelled placeholder photos |
+| `demo/tools/make_placeholders.py` | Makes the placeholder photos (crops, or drawn scenes if the source photo is missing) |
 
 ### 2.1 Conventions
 - **Fictional, realistic and consistent.** People have realistic names that reflect
@@ -125,8 +125,8 @@ Run from the repository root.
 
 | Command | What it does | Verified |
 | --- | --- | --- |
-| `node demo/tools/validate.mjs` | Checks the dataset and exits with status 1 on any error | 2026-11-07, Node 22: passes, and fails as expected on injected HTML, a cross-complex photo and a publisher who was not an admin |
-| `python3 demo/tools/make_placeholders.py` | Redraws placeholder photos for media whose `source` is `placeholder` (requires Pillow) | 2026-11-07, Python 3 with Pillow 12 |
+| `node demo/tools/validate.mjs` | Checks the dataset and exits with status 1 on any error | 2026-11-07, Node 22: passes. Fails as expected on injected HTML, a cross-complex photo, a publisher who was not an admin, a crop outside the source, an unknown tint and a missing `placeholderSource` |
+| `python3 demo/tools/make_placeholders.py` | Regenerates placeholder photos: crops for `crop-placeholder` entries, or drawn scenes for `placeholder` entries and whenever the source photo is missing. Skips `ai-generated` and `licensed` photos. Requires Pillow | 2026-11-07, Python 3 with Pillow 12: 22 crops; the drawn-scene fallback also works when the source is removed |
 
 The validator checks:
 - that every key is unique and every reference resolves;
@@ -138,7 +138,8 @@ The validator checks:
 - the page content limits, plain text only, known amenities and presets, and that
   no photo is used by another complex;
 - that published revisions are complete;
-- that every photo file exists.
+- that every photo file exists, crop settings stay inside the source photo, and the
+  source photo and its usage limits are declared.
 
 It also lists the drafts that are intentionally unpublishable.
 
@@ -169,6 +170,10 @@ documented as verified only once they run.
 5. Every seed and reset writes an audit event (who, when, which dataset version).
 6. An automated test checks that the commands refuse when the database says
    `production`.
+7. On staging, the seed refuses to upload any photo whose source rights are not
+   confirmed. Today that means every `crop-placeholder` (see `manifest.json` →
+   `placeholderSource.rightsConfirmed`). Staging needs AI-generated or licensed photos,
+   or the drawn placeholders.
 
 ### 4.3 Signing in as a demo person
 - **Development:** sign-in codes are caught by the local mail viewer that comes with
@@ -179,5 +184,6 @@ documented as verified only once they run.
 
 ## 5. Open items
 1. How reviewers sign in as demo people on staging (§4.3).
-2. Replacing placeholder photos with AI-generated images. Prompts are ready in
+2. Replacing the crop placeholders with AI-generated or licensed images before
+   staging, or confirming the rights to the source photo. Prompts are ready in
    `media.json`; no image-generation tool is connected in this repository's workflow.

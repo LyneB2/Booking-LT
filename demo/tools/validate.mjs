@@ -153,9 +153,27 @@ for (const c of complexes) if (!paged.has(c.key)) err(`${c.key}: no page entry`)
 // Media files
 for (const m of media) {
   if (!C.has(m.complex)) err(`${m.key}: unknown complex`);
-  if (!["placeholder", "ai-generated", "licensed"].includes(m.source)) err(`${m.key}: bad source`);
+  if (!["crop-placeholder", "placeholder", "ai-generated", "licensed"].includes(m.source)) err(`${m.key}: bad source`);
+  if (m.source === "crop-placeholder") {
+    const c = m.crop || {};
+    const ok = ["x", "y", "w", "h"].every((k) => typeof c[k] === "number" && c[k] >= 0 && c[k] <= 100);
+    if (!ok || c.w <= 0 || c.h <= 0 || c.x + c.w > 100.0001 || c.y + c.h > 100.0001) err(`${m.key}: crop must be x, y, w, h percentages inside the source`);
+    if (m.flip !== undefined && typeof m.flip !== "boolean") err(`${m.key}: flip must be true or false`);
+    if (!["none", "warm", "cool", "dusk", undefined].includes(m.grade)) err(`${m.key}: unknown grade "${m.grade}"`);
+  }
   if (!existsSync(join(ROOT, m.file))) err(`${m.key}: file missing (${m.file}); run python3 demo/tools/make_placeholders.py`);
   if (!m.aiPrompt) err(`${m.key}: missing aiPrompt`);
+}
+
+// Source photo for crop placeholders: must be declared, present, and its limits stated
+if (media.some((m) => m.source === "crop-placeholder")) {
+  const ps = manifest.placeholderSource;
+  if (!ps || !ps.path) err("manifest.json: placeholderSource is required when crop placeholders exist");
+  else {
+    if (!existsSync(join(ROOT, ps.path))) err(`manifest.json: placeholderSource file missing (${ps.path})`);
+    if (typeof ps.rightsConfirmed !== "boolean" || !ps.allowedUse) err("manifest.json: placeholderSource needs rightsConfirmed and allowedUse");
+    if (ps.rightsConfirmed === false) notes.push("crop placeholders come from a photo whose rights are unconfirmed: development and internal previews only");
+  }
 }
 
 const counts = `${complexes.length} complexes, ${people.length} people, ${roleAssignments.length} role assignments, ${pages.length} pages, ${media.length} photos`;
