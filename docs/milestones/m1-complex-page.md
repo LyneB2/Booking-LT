@@ -88,7 +88,8 @@ changes), and tests cover that validation. Proposed shape:
   "amenities": ["pool", "beach_access", "parking"],   // keys from a fixed catalogue
   "contact": { "phone": "+18095550142", "email": "frontdesk@example.com", "whatsapp": true },
   "brandPreset": "lagoon",                            // preset key, never a free colour
-  "photos": [{ "mediaId": "…", "alt": { "es": "…", "en": "…" } }],  // M1.3
+  "photos": [{ "mediaId": "…", "focal": { "x": 50, "y": 62 },     // M1.3; order = array order
+              "alt": { "es": "…", "en": "…" } }],
   "coverMediaId": "…"                                                // M1.3
 }
 ```
@@ -270,6 +271,12 @@ build service (free tier to start).
 | C. One server on Render/Railway/VPS + managed PostgreSQL + a self-hosted auth library | Lowest lock-in; predictable cost | We run more ourselves: sessions, mobile tokens, email codes, backups, scaling |
 
 ## 8. Design previews
+
+Visual rules shared by all screens are in [`docs/design.md`](../design.md). The
+public page (tab 1) follows revision 2 of those rules: contained gallery, Inter,
+calmer title. The editor, preview and arrivals tabs still use the earlier styling
+and will be updated after revision 2 is approved. Gallery examples for 1–5 photos
+are in `public-gallery-states.png`.
 
 Open `design/previews/m1-complex-page.html` in a browser. Tabs switch between the
 four screens; a toggle shows the desktop and phone layouts. Screenshots:

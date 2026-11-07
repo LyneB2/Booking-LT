@@ -180,6 +180,8 @@ even if the first listings are simple.
   feel approachable, not like enterprise software.
 - **Representative desktop and mobile designs are presented for review before the
   full interfaces are implemented.**
+- Reusable visual rules (typography, widths, spacing, radii, gallery behaviour)
+  live in [design.md](design.md).
 
 ## 6. Phased scope
 
